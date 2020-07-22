@@ -1,5 +1,8 @@
 package org.bonn.se.gui.views;
 
+import com.vaadin.data.Binder;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
 
 import com.vaadin.navigator.ViewChangeListener;
@@ -34,6 +37,24 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
         final PasswordField passwordField = new PasswordField();
         passwordField.setCaption("Passwort:");
 
+        Binder<User> binder = new Binder<>(User.class);
+
+        binder.forField(passwordField)
+                .asRequired("Passwort ist muss!")
+                .withValidator(new StringLengthValidator("Passwort muss 8 Zeichen lang sein!",8,null))
+                .bind(User::getPasswort,User::setPasswort);
+
+        binder.forField(vorName)
+                .asRequired("Vorname ist muss!")
+                .bind(User::getNachname,User::setVorname);
+        binder.forField(nachName)
+                .asRequired("Vorname ist muss!")
+                .bind(User::getNachname,User::setNachname);
+        binder.forField(email)
+                .asRequired("Email ist muss")
+                .withValidator(new EmailValidator("Keine gültige Email!"))
+                .bind(User::getEmail,User::setEmail);
+
         VerticalLayout layout = new VerticalLayout();
         layout.addComponent(vorName);
         layout.addComponent(nachName);
@@ -51,11 +72,12 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
 
         Button registerVertrieblerButton = new Button("Registrieren");
         registerVertrieblerButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        registerVertrieblerButton.setEnabled(false);
         layout.addComponent(registerVertrieblerButton);
         panel.setSizeUndefined();
 
         User user = new User();
-
+        binder.setBean(user);
 
 
         registerVertrieblerButton.addClickListener(
@@ -67,18 +89,19 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                             email.setComponentError(new UserError("Bitte eine andere Email verwenden"));
                         } else{
                             user.setType("v");
+                            registerVertrieblerButton.setEnabled(false);
                             user.setVorname(vorName.getValue());
                             user.setNachname(nachName.getValue());
                             user.setEmail(email.getValue());
                             user.setPasswort(passwordField.getValue());
-
-                            UserDAO.getInstance().registerUser(user);
 
                             Vertriebler vertriebler = new Vertriebler();
                             vertriebler.setEmail(user.getEmail());
                             vertriebler.setVorname(user.getVorname());
                             vertriebler.setNachname(user.getNachname());
                             vertriebler.setPasswort(user.getPasswort());
+
+                            UserDAO.getInstance().registerUser(user);
 
                             UI.getCurrent().getSession().setAttribute(Roles.VERTRIEBLER,vertriebler);
                         }
@@ -87,7 +110,9 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                     }
                 });
 
-
+        binder.addStatusChangeListener(
+                event -> registerVertrieblerButton.setEnabled(binder.isValid())
+        );
     }
 
 

@@ -51,7 +51,7 @@ $v-selection-overlay-padding-horizontal: 0;
 $v-selection-overlay-padding-vertical: 6px;
 $v-selection-item-border-radius: 0;
 
-.registerVertriebler .v-panel-content {background: #B2B2B2;
+.registerVertriebler .v-panel-content {background: darkolivegreen;
   border: 0px #fff;
   padding: 10px;
   font-family: Verdana;
@@ -60,11 +60,10 @@ $v-selection-item-border-radius: 0;
 }
 
 
-
 @import "../valo/valo.scss";
-
 @mixin mytheme {
   @include valo;
 
   // Insert your own theme rules here
 }
+
