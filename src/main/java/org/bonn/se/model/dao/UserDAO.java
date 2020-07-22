@@ -71,7 +71,7 @@ public class UserDAO extends AbstractDAO {
     public void registerUser(User user) throws  DatabaseException{
         String sql;
         if(user.getType().equals("v")){
-            sql = "INSERT INTO carlook.tab_user VALUES(?,?,?,?,?); INSERT INTO carlook.tab_vertriebler (email) VALUES(?);";
+            sql = "INSERT INTO carlook.tab_user VALUES(?,?,?,?,?); INSERT INTO carlook.tab_vertriebler (email,kontakt_nr) VALUES(?,?);";
         }else{
             sql = "INSERT INTO carlook.tab_user VALUES(?,?,?,?,?); INSERT INTO carlook.tab_kunde (email) VALUES(?);";
         }
@@ -90,6 +90,7 @@ public class UserDAO extends AbstractDAO {
                 //statement.setString(7, user.getHauptsitz());
                //statement.setString(8, user.getBundesland());
                 statement.setString(6, user.getEmail());
+                statement.setString(7, user.getKontaktNr());
             } else {
                 statement.setString(6, user.getEmail());
             }

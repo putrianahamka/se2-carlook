@@ -7,6 +7,7 @@ import com.vaadin.event.ShortcutAction;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.UserError;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UserSearchControl;
 import org.bonn.se.model.dao.UserDAO;
@@ -22,6 +23,15 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
     public void setUp(){
         this.setSizeFull();
 
+        String header = "Bitte registerieren Sie sich";
+
+        Label head = new Label (header, ContentMode.HTML);
+        //head.setSizeUndefined();
+        head.setHeight("10px");
+        HorizontalLayout hori = new HorizontalLayout();
+        hori.addComponent(head);
+        hori.setHeight("10px");
+
         final TextField vorName = new TextField();
         vorName.setCaption("Vorname:");
 
@@ -31,8 +41,8 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
         final TextField email = new TextField();
         email.setCaption("Email:");
 
-        //final TextField kontaktNr = new TextField();
-        //kontaktNr.setCaption("Kontakt Nr.:");
+        final TextField kontaktNr = new TextField();
+        kontaktNr.setCaption("Tel. Nummer:");
 
         final PasswordField passwordField = new PasswordField();
         passwordField.setCaption("Passwort:");
@@ -53,20 +63,35 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
         binder.forField(email)
                 .asRequired("Email ist muss")
                 .withValidator(new EmailValidator("Keine gültige Email!"))
+                .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Nur @carlook.de Email ist erlaubt")
+                .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email must be vorname@carlook.de")
                 .bind(User::getEmail,User::setEmail);
 
         VerticalLayout layout = new VerticalLayout();
+
         layout.addComponent(vorName);
         layout.addComponent(nachName);
-        //layout.addComponent(kontaktNr);
+        layout.addComponent(kontaktNr);
         layout.addComponent(email);
         layout.addComponent(passwordField);
 
         Panel panel = new Panel("Bitte Daten eingeben:");
         panel.addStyleName("registerVertriebler");
 
+        layout.setWidth("300px");
+        vorName.setWidth("270px");
+        nachName.setWidth("270px");
+        kontaktNr.setWidth("270px");
+        email.setWidth("270px");
+        passwordField.setWidth("270px");
+
+
+        //this.addComponent(hori);
         this.addComponent(panel);
+        //this.setComponentAlignment(hori, Alignment.TOP_CENTER);
         this.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+
+
 
         panel.setContent(layout);
 
@@ -94,12 +119,14 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                             user.setNachname(nachName.getValue());
                             user.setEmail(email.getValue());
                             user.setPasswort(passwordField.getValue());
+                            user.setKontaktNr(kontaktNr.getValue());
 
                             Vertriebler vertriebler = new Vertriebler();
                             vertriebler.setEmail(user.getEmail());
                             vertriebler.setVorname(user.getVorname());
                             vertriebler.setNachname(user.getNachname());
                             vertriebler.setPasswort(user.getPasswort());
+                            vertriebler.setKontaktNr(user.getKontaktNr());
 
                             UserDAO.getInstance().registerUser(user);
 

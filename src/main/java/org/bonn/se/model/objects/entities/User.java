@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String email;
     private String passwort;
     private String type;
+    private String kontaktNr;
 
     public User(){
         setVorname(null);
@@ -49,5 +50,11 @@ public class User implements Serializable {
     }
 
 
+    public String getKontaktNr() {
+        return kontaktNr;
+    }
 
+    public void setKontaktNr(String kontaktNr) {
+        this.kontaktNr = kontaktNr;
+    }
 }
