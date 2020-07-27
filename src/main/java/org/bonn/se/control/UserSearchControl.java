@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class UserSearchControl {
     private static UserSearchControl instance;
-
+    //Test for pull push
     public static UserSearchControl getInstance(){
         if (instance == null){
             instance = new UserSearchControl();
