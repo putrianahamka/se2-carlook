@@ -18,13 +18,13 @@ public class TopPanel extends HorizontalLayout {
         if (usertype.equals("vertriebler")){
             buttonOne = "Registrierung Kunde";
             buttonTwo = "Login";
-            navigateToOne= LOGINVIEW;
-            navigateToTwo = REGISTERKUNDE;
+            navigateToOne= REGISTERKUNDE;
+            navigateToTwo = LOGINVIEW;
         }else if(usertype.equals("kunde")){
             buttonOne="Registrierung Vertriebler";
             buttonTwo="Login";
-            navigateToOne= LOGINVIEW;
-            navigateToTwo = REGISTERVERTRIEBLER;
+            navigateToOne= REGISTERVERTRIEBLER;
+            navigateToTwo = LOGINVIEW;
         } else{
             buttonOne = "Registrierung Vertriebler";
             buttonTwo = "Registrierung Kunde";
@@ -42,13 +42,13 @@ public class TopPanel extends HorizontalLayout {
 
         horizontalLayout.addComponents(switchUser,loginButton);
         horizontalLayout.setMargin(true);
-        switchUser.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(navigateToTwo));
+        switchUser.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(navigateToOne));
 
         loginButton.addClickListener((Button.ClickListener) event -> {
-            if (loginButton.getCaption().equals("Register Kunde")){
+            if (loginButton.getCaption().equals("Registrierung Kunde")){
                 UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
             } else{
-                UI.getCurrent().getNavigator().navigateTo(navigateToOne);
+                UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
             }
         });
 

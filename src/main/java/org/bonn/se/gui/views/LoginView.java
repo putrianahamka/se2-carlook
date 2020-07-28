@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 
 public class LoginView extends VerticalLayout implements View {
     public void setUp(){
-        Label head = new Label ("Welcome to CarLook Ltd. </i> Wenn Sie noch keine Account haben, bitte registrieren Sie sich.", ContentMode.HTML);
+        Label head = new Label ("Welcome to CarLook Ltd. </n> Wenn Sie noch keine Account haben, bitte registrieren Sie sich.", ContentMode.HTML);
 
-        this.addComponent(new TopPanel("kunde"));
+        this.addComponent(new TopPanel("login"));
         head.setSizeUndefined();
         head.addStyleName("headLabel");
         this.addComponent(head);

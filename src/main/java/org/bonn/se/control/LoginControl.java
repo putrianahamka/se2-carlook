@@ -83,6 +83,6 @@ public class LoginControl {
         VaadinSession vaadinSession = UI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.VERTRIEBLER,null);
         vaadinSession.setAttribute(Roles.KUNDE,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.REGISTERVERTRIEBLER);
+        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
     }
 }
