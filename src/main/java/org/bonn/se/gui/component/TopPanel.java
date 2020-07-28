@@ -9,7 +9,7 @@ import static org.bonn.se.services.util.Views.*;
 public class TopPanel extends HorizontalLayout {
     public TopPanel(String usertype){
         this.setSizeFull();
-        //this.setMargin(true);
+        this.setMargin(false);
 
         String buttonOne;
         String buttonTwo;

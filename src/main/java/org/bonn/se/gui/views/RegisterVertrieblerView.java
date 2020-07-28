@@ -134,6 +134,7 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                             UserDAO.getInstance().registerUser(user);
 
                             UI.getCurrent().getSession().setAttribute(Roles.VERTRIEBLER,vertriebler);
+                            UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW);
                         }
                     } catch(DatabaseException e){
                         e.printStackTrace();

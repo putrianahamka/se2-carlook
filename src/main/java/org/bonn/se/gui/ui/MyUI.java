@@ -6,13 +6,13 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import org.bonn.se.gui.views.LoginView;
 import org.bonn.se.gui.views.RegisterVertrieblerView;
 import org.bonn.se.gui.views.VertrieblerHomeView;
 
 import javax.servlet.annotation.WebServlet;
 
-import static org.bonn.se.services.util.Views.REGISTERVERTRIEBLER;
-import static org.bonn.se.services.util.Views.VERTRIEBLERHOMEVIEW;
+import static org.bonn.se.services.util.Views.*;
 
 @Title("CarLook Ltd.")
 public class MyUI extends UI {
@@ -25,7 +25,7 @@ public class MyUI extends UI {
         Navigator navi = new Navigator(this,this);
         navi.addView(REGISTERVERTRIEBLER, RegisterVertrieblerView.class);
         navi.addView(VERTRIEBLERHOMEVIEW, VertrieblerHomeView.class);
-
+        navi.addView(LOGINVIEW, LoginView.class);
         UI.getCurrent().getNavigator().navigateTo(REGISTERVERTRIEBLER);
     }
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
