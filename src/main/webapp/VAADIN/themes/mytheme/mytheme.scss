@@ -54,12 +54,17 @@ $v-selection-item-border-radius: 0;
 .registerVertriebler .v-panel-content {background: darkolivegreen;
   border: 0px #fff;
   padding: 10px;
-  font-family: Verdana;
+  font-family: Calibri;
   color: white;
 
 }
 
-
+.headLabel{
+  background: #2c9720;
+  color: #2c9720;
+  font-size: 24px;
+  font-family: Calibri;
+}
 @import "../valo/valo.scss";
 @mixin mytheme {
   @include valo;

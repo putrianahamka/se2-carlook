@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 
 public class UserSearchControl {
     private static UserSearchControl instance;
-    //Test for pull push
-    //Test Hassam push pull
     public static UserSearchControl getInstance(){
         if (instance == null){
             instance = new UserSearchControl();

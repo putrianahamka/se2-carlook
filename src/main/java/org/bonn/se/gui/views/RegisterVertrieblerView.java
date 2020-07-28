@@ -21,16 +21,18 @@ import com.vaadin.navigator.View;
 public class RegisterVertrieblerView extends VerticalLayout implements View {
 
     public void setUp(){
-        this.setSizeFull();
+        //this.setSizeFull();
 
-        String header = "Bitte registerieren Sie sich";
+        Label head = new Label ("Registrieren Sie sich als Vertriebler", ContentMode.HTML);
 
-        Label head = new Label (header, ContentMode.HTML);
-        //head.setSizeUndefined();
-        head.setHeight("10px");
-        HorizontalLayout hori = new HorizontalLayout();
-        hori.addComponent(head);
-        hori.setHeight("10px");
+
+        head.setSizeUndefined();
+        head.addStyleName("headLabel");
+        this.addComponent(head);
+        this.setComponentAlignment(head,Alignment.TOP_CENTER);
+        //HorizontalLayout hori = new HorizontalLayout();
+       // hori.addComponent(head);
+        //hori.setHeight("10px");
 
         final TextField vorName = new TextField();
         vorName.setCaption("Vorname:");
@@ -89,7 +91,7 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
         //this.addComponent(hori);
         this.addComponent(panel);
         //this.setComponentAlignment(hori, Alignment.TOP_CENTER);
-        this.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(panel, Alignment.TOP_CENTER);
 
 
 
