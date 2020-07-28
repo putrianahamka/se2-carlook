@@ -6,4 +6,5 @@ public class Views {
     public static final String REGISTERKUNDE = "registerKunde";
     public static final String VERTRIEBLERHOMEVIEW = "vertrieblerHomeView";
     public static final String KUNDEHOMEVIEW = "kundeHomeView";
+    public static final String LOGINVIEW = "loginView";
 }

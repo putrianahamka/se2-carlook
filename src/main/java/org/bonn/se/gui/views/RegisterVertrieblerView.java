@@ -10,6 +10,7 @@ import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UserSearchControl;
+import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.model.objects.entities.Vertriebler;
@@ -25,7 +26,7 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
 
         Label head = new Label ("Registrieren Sie sich als Vertriebler", ContentMode.HTML);
 
-
+        this.addComponent(new TopPanel("vertriebler"));
         head.setSizeUndefined();
         head.addStyleName("headLabel");
         this.addComponent(head);

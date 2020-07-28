@@ -7,10 +7,12 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.views.RegisterVertrieblerView;
+import org.bonn.se.gui.views.VertrieblerHomeView;
 
 import javax.servlet.annotation.WebServlet;
 
 import static org.bonn.se.services.util.Views.REGISTERVERTRIEBLER;
+import static org.bonn.se.services.util.Views.VERTRIEBLERHOMEVIEW;
 
 @Title("CarLook Ltd.")
 public class MyUI extends UI {
@@ -22,7 +24,7 @@ public class MyUI extends UI {
 
         Navigator navi = new Navigator(this,this);
         navi.addView(REGISTERVERTRIEBLER, RegisterVertrieblerView.class);
-
+        navi.addView(VERTRIEBLERHOMEVIEW, VertrieblerHomeView.class);
 
         UI.getCurrent().getNavigator().navigateTo(REGISTERVERTRIEBLER);
     }

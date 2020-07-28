@@ -1,5 +1,5 @@
 .registerVertriebler .v-panel-content {
-	background: darkolivegreen;
+	background-color: darkolivegreen;
 	border: 0px #fff;
 	padding: 10px;
 	font-family: Calibri;
@@ -7,7 +7,7 @@
 }
 
 .headLabel {
-	background: #2c9720;
+	background-color: #2c9720;
 	color: #2c9720;
 	font-size: 24px;
 	font-family: Calibri;
