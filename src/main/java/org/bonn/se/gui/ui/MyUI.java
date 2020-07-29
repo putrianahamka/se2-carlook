@@ -1,5 +1,7 @@
 package org.bonn.se.gui.ui;
 
+import com.vaadin.annotations.PreserveOnRefresh;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -14,8 +16,9 @@ import org.bonn.se.gui.views.VertrieblerProfilView;
 import javax.servlet.annotation.WebServlet;
 
 import static org.bonn.se.services.util.Views.*;
-
+@Push
 @Title("CarLook Ltd.")
+@PreserveOnRefresh
 public class MyUI extends UI {
 
 
