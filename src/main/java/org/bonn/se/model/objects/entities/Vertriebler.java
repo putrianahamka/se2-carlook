@@ -59,4 +59,9 @@ public class Vertriebler extends  User{
         super.setEmail(email);
     }
     public void setPasswort(String passwort){ super.setPasswort(passwort);}
+
+    @Override
+    public String toString(){
+        return "" + personalNummer;
+    }
 }

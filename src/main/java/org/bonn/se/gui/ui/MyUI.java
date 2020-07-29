@@ -9,6 +9,7 @@ import com.vaadin.ui.UI;
 import org.bonn.se.gui.views.LoginView;
 import org.bonn.se.gui.views.RegisterVertrieblerView;
 import org.bonn.se.gui.views.VertrieblerHomeView;
+import org.bonn.se.gui.views.VertrieblerProfilView;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -26,7 +27,10 @@ public class MyUI extends UI {
         navi.addView(REGISTERVERTRIEBLER, RegisterVertrieblerView.class);
         navi.addView(VERTRIEBLERHOMEVIEW, VertrieblerHomeView.class);
         navi.addView(LOGINVIEW, LoginView.class);
-        UI.getCurrent().getNavigator().navigateTo(REGISTERVERTRIEBLER);
+        navi.addView(VERTRIEBLERPROFIL, VertrieblerProfilView.class);
+
+        UI.getCurrent().getNavigator().navigateTo(LOGINVIEW);
+
     }
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = true)

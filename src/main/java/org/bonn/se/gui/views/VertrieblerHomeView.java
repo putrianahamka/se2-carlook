@@ -10,7 +10,7 @@ import org.bonn.se.services.util.Views;
 public class VertrieblerHomeView extends VerticalLayout implements View {
 
     public void setUp(){
-        TopPanelUser topPanelUser = new TopPanelUser();
+        //TopPanelUser topPanelUser = new TopPanelUser();
         this.addComponent(new TopPanelUser());
         GridLayout mainGrid = new GridLayout(3,3);
 

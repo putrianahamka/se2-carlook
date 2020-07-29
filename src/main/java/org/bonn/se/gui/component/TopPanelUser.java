@@ -7,6 +7,7 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 //import com.vaadin.ui.GridLayout;
 //import com.vaadin.ui.MenuBar;
 
@@ -20,7 +21,7 @@ public class TopPanelUser extends HorizontalLayout {
         //this.setColumns(10);
         this.setSizeFull();
 
-        Label headLabel = new Label("CarLook Ltd. </i> bkdfsdfafdfgsdfgsgfsghfshsdgsdgsgsg", ContentMode.HTML);
+        Label headLabel = new Label("CarLook Ltd.", ContentMode.HTML);
         headLabel.setSizeUndefined();
         headLabel.addStyleName("mytitel");
 
@@ -42,9 +43,16 @@ public class TopPanelUser extends HorizontalLayout {
                     ((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getVorname(),null
             );
         }else{
-
+            //Code for Kunde-getVorname
         }
 
+        if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER) != null) {
+            item1.addItem("Home",VaadinIcons.HOME,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW));
+            item1.addItem("Mein Profil",VaadinIcons.USER,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERPROFIL));
+            item1.addSeparator();
+        }else{
+            //Code for Kunde
+        }
 
         item1.addItem("Logout", VaadinIcons.SIGN_OUT,(MenuBar.Command) menuItem -> LoginControl.logoutUser());
 
