@@ -57,6 +57,13 @@ public class VertrieblerProfilView extends VerticalLayout implements View {
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponents(personalNummer,vorName,nachName,email,kontaktNr);
 
+        verticalLayout.setWidth("300px");
+        vorName.setWidth("270px");
+        nachName.setWidth("270px");
+        kontaktNr.setWidth("270px");
+        email.setWidth("270px");
+        kontaktNr.setWidth("270px");
+        personalNummer.setWidth("270px");
         Panel panel = new Panel("Profil-Daten:");
 
         this.addComponent(panel);

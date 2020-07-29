@@ -10,7 +10,9 @@ import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UserSearchControl;
+import org.bonn.se.gui.component.ConfirmationWindow;
 import org.bonn.se.gui.component.TopPanel;
+import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.model.objects.entities.Vertriebler;
@@ -18,6 +20,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import com.vaadin.navigator.View;
+
+import java.sql.SQLException;
 
 public class RegisterVertrieblerView extends VerticalLayout implements View {
 
@@ -69,6 +73,7 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                 .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Nur @carlook.de Email ist erlaubt")
                 .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email must be vorname@carlook.de")
                 .bind(User::getEmail,User::setEmail);
+
 
         VerticalLayout layout = new VerticalLayout();
 
@@ -131,12 +136,19 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
                             vertriebler.setPasswort(user.getPasswort());
                             vertriebler.setKontaktNr(user.getKontaktNr());
 
+
                             UserDAO.getInstance().registerUser(user);
 
                             UI.getCurrent().getSession().setAttribute(Roles.VERTRIEBLER,vertriebler);
+
+                            vertriebler = ProfilDAO.getInstance().getVertrieblerProfil(vertriebler);
+
+                            UI.getCurrent().getSession().setAttribute(Roles.VERTRIEBLER,vertriebler);
+                            ConfirmationWindow confirmationWindow = new ConfirmationWindow("Sie haben sich erfolgreich registriert");
+                            UI.getCurrent().addWindow(confirmationWindow);
                             UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW);
                         }
-                    } catch(DatabaseException e){
+                    } catch(DatabaseException | SQLException e){
                         e.printStackTrace();
                     }
                 });
