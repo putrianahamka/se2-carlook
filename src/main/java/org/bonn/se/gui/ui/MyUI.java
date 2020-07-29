@@ -8,10 +8,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import org.bonn.se.gui.views.LoginView;
-import org.bonn.se.gui.views.RegisterVertrieblerView;
-import org.bonn.se.gui.views.VertrieblerHomeView;
-import org.bonn.se.gui.views.VertrieblerProfilView;
+import org.bonn.se.gui.views.*;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -31,6 +28,7 @@ public class MyUI extends UI {
         navi.addView(VERTRIEBLERHOMEVIEW, VertrieblerHomeView.class);
         navi.addView(LOGINVIEW, LoginView.class);
         navi.addView(VERTRIEBLERPROFIL, VertrieblerProfilView.class);
+        navi.addView(AUTOANLEGEN, AutoAnlegenView.class);
 
         UI.getCurrent().getNavigator().navigateTo(LOGINVIEW);
 
