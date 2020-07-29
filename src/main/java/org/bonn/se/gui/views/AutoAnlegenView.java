@@ -5,11 +5,14 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.bonn.se.control.DropDownsControl;
 import org.bonn.se.gui.component.TopPanelUser;
+import org.bonn.se.model.objects.dto.FahrzeugDTO;
+import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,7 +72,7 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         ComboBox<String> schadenstoffklasse = new ComboBox<>("Schadenstoffklasse:",DropDownsControl.getInstance().getSchadenstoffKlasse());
 
-        Button speichern = new Button("Speichern");
+        Button weiter = new Button("Weiter");
         Button abbrechen = new Button("Abbrechen");
 
         this.addComponent(topPanelUser,1,1,8,1);
@@ -139,8 +142,8 @@ public class AutoAnlegenView extends GridLayout implements View {
         formGrid.addComponent(schadenstoffklasse,2,6,2,6);
         formGrid.setComponentAlignment(schadenstoffklasse, Alignment.MIDDLE_CENTER);
 
-        formGrid.addComponent(speichern,3,7,3,7);
-        formGrid.setComponentAlignment(speichern, Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(weiter,3,7,3,7);
+        formGrid.setComponentAlignment(weiter, Alignment.MIDDLE_CENTER);
 
         formGrid.addComponent(abbrechen,2,7,2,7);
         formGrid.setComponentAlignment(abbrechen, Alignment.MIDDLE_CENTER);
@@ -155,6 +158,39 @@ public class AutoAnlegenView extends GridLayout implements View {
         panel.setSizeUndefined();
         this.addComponent(panel,2,2,7,3);
         this.setComponentAlignment(panel,Alignment.MIDDLE_CENTER);
+
+        FahrzeugDTO fahrzeugDTO = new FahrzeugDTO();
+
+        abbrechen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW));
+        weiter.addClickListener((Button.ClickListener) event ->{
+           if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)instanceof Vertriebler) {
+               fahrzeugDTO.setFahrzeugZustand(fahrzeugZustand.getValue());
+               fahrzeugDTO.setShortDescription(shortDescription.getValue());
+               fahrzeugDTO.setMarke(marke.getValue());
+               fahrzeugDTO.setModell(modell.getValue());
+               fahrzeugDTO.setFahrzeugTyp(fahrzeugTyp.getValue());
+               fahrzeugDTO.setErstzulassung(erstzulassung.getValue());
+               fahrzeugDTO.setPreis(Integer.parseInt(preis.getValue()));
+               fahrzeugDTO.setKilometer(Integer.parseInt(kilometer.getValue()));
+               fahrzeugDTO.setLeistung(Integer.parseInt(leistung.getValue()));
+               fahrzeugDTO.setKraftstoffart(kraftstoffArt.getValue());
+               fahrzeugDTO.setGetriebe(getriebe.getValue());
+               fahrzeugDTO.setTuev(tuevBis.getValue());
+               fahrzeugDTO.setAussenfarbe(aussenfarbe.getValue());
+               fahrzeugDTO.setAnzahlTueren(anzahlTueren.getValue());
+               fahrzeugDTO.setAnzahlSitzplaetze(anzahlSitzplaetze.getValue());
+               fahrzeugDTO.setKlimaanlage(klimaanlage.getValue());
+               fahrzeugDTO.setFahrzeugart(fahrzeugart.getValue());
+               fahrzeugDTO.setAnzahlFahrzeughalter(anzahlFahrzeughalter.getValue());
+               fahrzeugDTO.setSchadenstoffklasse(schadenstoffklasse.getValue());
+               fahrzeugDTO.setUmweltplakette(umweltplakette.getValue());
+               fahrzeugDTO.setGarantie(garantie.getValue());
+               //fahrzeugDTO.setZeitstempel(());
+               fahrzeugDTO.setPersonalnummer(((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getPersonalNummer());
+               ((Vertriebler) UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).setFahrzeug(fahrzeugDTO);
+           }
+           UI.getCurrent().getNavigator().navigateTo(Views.FAHRZEUGDESCRIPTION);
+        });
     }
 
     @Override

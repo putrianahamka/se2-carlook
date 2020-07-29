@@ -1,5 +1,9 @@
 package org.bonn.se.model.objects.entities;
 
+import org.bonn.se.model.objects.dto.FahrzeugDTO;
+
+import java.util.ArrayList;
+
 public class Vertriebler extends  User{
     private String kontaktNr;
     private int personalNummer;
@@ -7,6 +11,11 @@ public class Vertriebler extends  User{
     private String nachname;
     private String email;
     private String passwort;
+
+    private ArrayList<FahrzeugDTO> fahrzeugDTOliste;
+
+    private FahrzeugDTO fahrzeugDTO;
+
 
 
     public Vertriebler(){
@@ -59,6 +68,23 @@ public class Vertriebler extends  User{
         super.setEmail(email);
     }
     public void setPasswort(String passwort){ super.setPasswort(passwort);}
+
+    public void setFahrzeug(FahrzeugDTO fahrzeugDTO){
+        if(fahrzeugDTOliste == null){
+            fahrzeugDTOliste = new ArrayList<>();
+        }
+        fahrzeugDTOliste.add(fahrzeugDTO);
+    }
+
+    public void setFahrzeugDTOliste(ArrayList<FahrzeugDTO> fahrzeugDTOliste){
+        this.fahrzeugDTOliste = fahrzeugDTOliste;
+    }
+    public ArrayList<FahrzeugDTO> getFahrzeugeDTO(){
+        return fahrzeugDTOliste;
+    }
+    public FahrzeugDTO getFahrzeugDTO(){
+        return fahrzeugDTOliste.get(fahrzeugDTOliste.size()-1);
+    }
 
     @Override
     public String toString(){
