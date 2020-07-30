@@ -2,6 +2,7 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.*;
+// Sie haben sie erfolgreich Reserviert.. nimmt, RegisterVertrieblerView
 
 public class ConfirmationWindow extends Window {
     public ConfirmationWindow(String label){

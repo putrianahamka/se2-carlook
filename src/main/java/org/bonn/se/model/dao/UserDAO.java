@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class UserDAO extends AbstractDAO {
     private static UserDAO instance;
     public static UserDAO getInstance(){
