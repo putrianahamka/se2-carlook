@@ -1,13 +1,14 @@
 package org.bonn.se.model.dao;
 
+import org.bonn.se.model.objects.dto.FahrzeugDTO;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,4 +71,41 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
             JDBCConnection.getInstance().closeConnection();
         }
     }
+
+    public List<FahrzeugDTO> getFahrzeugByPersonalnummer(int personalNummer){
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+
+        try{
+            rs = statement.executeQuery("SELECT * FROM carlook.tab_fahrzeug WHERE carlook.tab_fahrzeug.personalnummer =" +
+                    " \'" + personalNummer + "\'");
+        }catch(SQLException ex){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (rs == null){
+            System.out.println("Liste ist leer");
+            return null;
+        }
+        FahrzeugDTO fahrzeugDTO =null;
+        List<FahrzeugDTO> liste = new ArrayList<>();
+
+        try{
+            while(rs.next()){
+                //fahrzeugDTO.setId(rs.getInt(1));
+                fahrzeugDTO = new FahrzeugDTO();
+                fahrzeugDTO.setFahrzeugZustand(rs.getString(2));
+                fahrzeugDTO.setShortDescription(rs.getString(3));
+                fahrzeugDTO.setMarke(rs.getString(4));
+                fahrzeugDTO.setModell(rs.getString(5));
+                liste.add(fahrzeugDTO);
+
+
+            }
+        }catch(SQLException throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return liste;
+
+    }
+
 }

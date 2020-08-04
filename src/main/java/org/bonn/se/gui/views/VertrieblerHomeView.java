@@ -2,10 +2,16 @@ package org.bonn.se.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanelUser;
+import org.bonn.se.model.dao.ContainerFahrzeugDAO;
+import org.bonn.se.model.objects.dto.FahrzeugDTO;
+import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+
+import java.util.List;
 
 public class VertrieblerHomeView extends VerticalLayout implements View {
 
@@ -25,6 +31,26 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
         mainGrid.addComponent(verticalLayout);
          this.addComponent(mainGrid);
          this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
+
+         Grid<FahrzeugDTO> grid = new Grid<>();
+         grid.setSizeFull();
+         grid.setHeightMode(HeightMode.UNDEFINED);
+         grid.setCaption("Meine Fahrzeuge");
+
+        int personalNummer = ((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getPersonalNummer();
+
+        List<FahrzeugDTO> liste = ContainerFahrzeugDAO.getInstance().getFahrzeugByPersonalnummer(personalNummer);
+        grid.setItems(liste);
+
+        //grid.addColumn(FahrzeugDTO::getId).setCaption("ID");
+        grid.addColumn(FahrzeugDTO::getFahrzeugZustand).setCaption("Fahrzeugzustand");
+        grid.addColumn(FahrzeugDTO::getShortDescription).setCaption("Short Description");
+        grid.addColumn(FahrzeugDTO::getMarke).setCaption("Marke");
+        grid.addColumn(FahrzeugDTO::getModell).setCaption("Modell");
+
+        this.addComponent(grid);
+
+
     }
 
     @Override
