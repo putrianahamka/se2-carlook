@@ -1,10 +1,13 @@
 package org.bonn.se.gui.views;
 
+import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanelUser;
+import org.bonn.se.gui.window.FahrzeugWindow;
 import org.bonn.se.model.dao.ContainerFahrzeugDAO;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
 import org.bonn.se.model.objects.entities.Vertriebler;
@@ -27,7 +30,7 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
 
         verticalLayout.setMargin(true);
         verticalLayout.addComponent(autoAnlegen);
-        verticalLayout.setComponentAlignment(autoAnlegen, Alignment.MIDDLE_CENTER);
+        verticalLayout.setComponentAlignment(autoAnlegen, Alignment.TOP_LEFT);
         mainGrid.addComponent(verticalLayout);
          this.addComponent(mainGrid);
          this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
@@ -35,7 +38,8 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
          Grid<FahrzeugDTO> grid = new Grid<>();
          grid.setSizeFull();
          grid.setHeightMode(HeightMode.UNDEFINED);
-         grid.setCaption("Meine Fahrzeuge");
+
+         grid.setCaption("Meine Fahrzeuge:");
 
         int personalNummer = ((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getPersonalNummer();
 
@@ -44,11 +48,24 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
 
         //grid.addColumn(FahrzeugDTO::getId).setCaption("ID");
         grid.addColumn(FahrzeugDTO::getFahrzeugZustand).setCaption("Fahrzeugzustand");
-        grid.addColumn(FahrzeugDTO::getShortDescription).setCaption("Short Description");
         grid.addColumn(FahrzeugDTO::getMarke).setCaption("Marke");
         grid.addColumn(FahrzeugDTO::getModell).setCaption("Modell");
+        grid.addColumn(FahrzeugDTO::getErstzulassung).setCaption("Erstzulassung");
+        grid.addColumn(FahrzeugDTO::getKilometer ).setCaption("Kilometer");
+        grid.addColumn(FahrzeugDTO::getPreis).setCaption("Kaufpreis (€)");
+        grid.addColumn(FahrzeugDTO::getShortDescription).setCaption("Short Description");
+
+
 
         this.addComponent(grid);
+
+        grid.asSingleSelect().addSingleSelectionListener((SingleSelectionListener<FahrzeugDTO>) event -> {
+            if(event.getValue() != null){
+                //System.out.println("ok " + event.getValue());
+                UI.getCurrent().addWindow(new FahrzeugWindow(event.getValue()));
+            }
+            grid.deselectAll();
+        });
 
 
     }

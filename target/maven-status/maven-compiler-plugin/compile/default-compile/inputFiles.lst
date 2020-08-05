@@ -15,10 +15,12 @@ C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\dao\Abstract
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\objects\entities\Vertriebler.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\gui\component\TopPanelUser.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\dao\DropDownsDAO.java
+C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\objects\entities\Kunden.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\services\util\Roles.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\services\db\JDBCConnection.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\control\LoginControl.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\gui\views\AutoAnlegenView.java
+C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\gui\views\RegisterKundenView.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\dao\ContainerFahrzeugDAO.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\dao\ProfilDAO.java
 C:\Users\hassa\IdeaProjects\carlook\src\main\java\org\bonn\se\model\objects\entities\ContainerFahrzeuge.java
