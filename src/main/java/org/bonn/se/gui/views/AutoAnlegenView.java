@@ -3,6 +3,7 @@ package org.bonn.se.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+
 import org.bonn.se.control.DropDownsControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
@@ -17,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AutoAnlegenView extends GridLayout implements View {
+    public static String markeStr ;
+
     public void setUp() throws DatabaseException, SQLException {
         this.setRows(15);
         this.setColumns(10);
@@ -148,6 +151,7 @@ public class AutoAnlegenView extends GridLayout implements View {
         formGrid.addComponent(abbrechen,2,7,2,7);
         formGrid.setComponentAlignment(abbrechen, Alignment.MIDDLE_CENTER);
 
+
         formGrid.setSpacing(true);
 
         //this.setComponentAlignment(topPanelUser, Alignment.TOP_LEFT);
@@ -162,6 +166,8 @@ public class AutoAnlegenView extends GridLayout implements View {
         FahrzeugDTO fahrzeugDTO = new FahrzeugDTO();
 
         abbrechen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW));
+
+
         weiter.addClickListener((Button.ClickListener) event ->{
            if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)instanceof Vertriebler) {
                fahrzeugDTO.setFahrzeugZustand(fahrzeugZustand.getValue());

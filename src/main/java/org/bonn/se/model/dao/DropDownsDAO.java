@@ -1,5 +1,6 @@
 package org.bonn.se.model.dao;
 
+import org.bonn.se.gui.views.AutoAnlegenView;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
@@ -59,6 +60,7 @@ public class DropDownsDAO extends AbstractDAO{
         try{
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT modell FROM carlook.tab_marke_modell ORDER BY modell");
+
             while (true){
                 assert set != null;
                 if(!set.next())break;
