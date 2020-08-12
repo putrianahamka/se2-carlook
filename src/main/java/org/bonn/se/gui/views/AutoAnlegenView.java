@@ -30,7 +30,7 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         TopPanelUser topPanelUser = new TopPanelUser();
 
-
+        String str = "";
         ComboBox<String> fahrzeugZustand = new ComboBox<>("Fahrzeugzustand:", DropDownsControl.getInstance().getFahrzeugZustand());
 
         ComboBox<String> fahrzeugart = new ComboBox<>("Fahrzeugart:", DropDownsControl.getInstance().getFahrzeugArt());
@@ -39,7 +39,13 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         ComboBox<String> marke = new ComboBox<>("Marke:",DropDownsControl.getInstance().getMarke());
 
-        ComboBox<String> modell = new ComboBox<>("Modell:",DropDownsControl.getInstance().getModell());
+        ComboBox<String> modell = new ComboBox<>("Modell:",DropDownsControl.getInstance().getModell(str));
+
+        marke.addValueChangeListener(event -> {
+            modell.setValue("");
+           modell.setItems(DropDownsControl.getInstance().getModell(event.getValue()));
+        });
+
 
         ComboBox<String> fahrzeugTyp = new ComboBox<>("Fahrzeugtyp:",DropDownsControl.getInstance().getFahrzeugTyp());
 

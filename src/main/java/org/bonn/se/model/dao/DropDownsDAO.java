@@ -53,14 +53,15 @@ public class DropDownsDAO extends AbstractDAO{
         return markenList;
     }
 
-    public List<String> getModell()throws DatabaseException, SQLException {
+    public List<String> getModell(String str)throws DatabaseException, SQLException {
         ResultSet set = null;
         List<String> modellList = new ArrayList<>();
 
         try{
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT modell FROM carlook.tab_marke_modell ORDER BY modell");
 
+            set = statement.executeQuery("SELECT modell FROM carlook.tab_marke_modell WHERE carlook.tab_marke_modell.marke =" +
+                            " \'" + str + "\'");
             while (true){
                 assert set != null;
                 if(!set.next())break;
