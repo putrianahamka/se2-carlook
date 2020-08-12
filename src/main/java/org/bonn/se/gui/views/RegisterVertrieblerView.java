@@ -57,21 +57,21 @@ public class RegisterVertrieblerView extends VerticalLayout implements View {
         Binder<User> binder = new Binder<>(User.class);
 
         binder.forField(passwordField)
-                .asRequired("Passwort ist muss!")
+                .asRequired("Passwort ist pflichtfeld!")
                 .withValidator(new StringLengthValidator("Passwort muss 8 Zeichen lang sein!",8,null))
                 .bind(User::getPasswort,User::setPasswort);
 
         binder.forField(vorName)
-                .asRequired("Vorname ist muss!")
+                .asRequired("Vorname ist pflichtfeld!")
                 .bind(User::getNachname,User::setVorname);
         binder.forField(nachName)
-                .asRequired("Vorname ist muss!")
+                .asRequired("Vorname ist pflichtfeld!")
                 .bind(User::getNachname,User::setNachname);
         binder.forField(email)
-                .asRequired("Email ist muss")
+                .asRequired("Email ist pflichtfeld")
                 .withValidator(new EmailValidator("Keine gültige Email!"))
-                .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Nur @carlook.de Email ist erlaubt")
-                .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email must be vorname@carlook.de")
+                .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Email muss [vorname]...@carlook.de sein!")
+                .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email muss [vorname]...@carlook.de sein!")
                 .bind(User::getEmail,User::setEmail);
 
 

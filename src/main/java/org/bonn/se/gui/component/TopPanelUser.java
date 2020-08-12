@@ -21,7 +21,7 @@ public class TopPanelUser extends HorizontalLayout {
         //this.setColumns(10);
         this.setSizeFull();
 
-        Label headLabel = new Label("CarLook Ltd.", ContentMode.HTML);
+        Label headLabel = new Label("<b>CarLook Ltd.</b>", ContentMode.HTML);
         headLabel.setSizeUndefined();
         headLabel.addStyleName("mytitel");
 
