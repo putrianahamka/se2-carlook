@@ -39,14 +39,12 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
          grid.setSizeFull();
          grid.setHeightMode(HeightMode.UNDEFINED);
 
-         grid.setCaption("Meine Fahrzeuge:");
-
         int personalNummer = ((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getPersonalNummer();
 
         List<FahrzeugDTO> liste = ContainerFahrzeugDAO.getInstance().getFahrzeugByPersonalnummer(personalNummer);
         grid.setItems(liste);
+        grid.setCaption("Meine Fahrzeuge: " + liste.size());
 
-        //grid.addColumn(FahrzeugDTO::getId).setCaption("ID");
         grid.addColumn(FahrzeugDTO::getFahrzeugZustand).setCaption("Fahrzeugzustand");
         grid.addColumn(FahrzeugDTO::getMarke).setCaption("Marke");
         grid.addColumn(FahrzeugDTO::getModell).setCaption("Modell");
