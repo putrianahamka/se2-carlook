@@ -17,15 +17,14 @@ public class LoginTestSelenium {
 
 
         try {
-            //FirefoxDriver driver=new FirefoxDriver();
             driver.get("http://localhost:8080/#!loginView");
-            WebElement element_UserName = driver.findElement(By.id("gwt-uid-3"));
+            WebElement elementEmail = driver.findElement(By.id("gwt-uid-3"));
 
-            //WebElement element = driver.findElement(By.xpath("//input[@name='email']"));
-            element_UserName.sendKeys("hassam@carlook.de");
 
-            WebElement elementTwo = driver.findElement(By.id("gwt-uid-5"));
-            elementTwo.sendKeys("12345678");
+            elementEmail.sendKeys("hassam@carlook.de");
+
+            WebElement elementPasswort = driver.findElement(By.id("gwt-uid-5"));
+            elementPasswort.sendKeys("12345678");
 
             WebElement button = driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[5]/div/div[2]/div/div[5]/div"));
             button.click();
