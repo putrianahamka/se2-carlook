@@ -25,9 +25,9 @@ public class DropDownsControl {
         return null;
     }
 
-    public List<String> getModell()  {
+    public List<String> getModell(String str)  {
         try {
-            return DropDownsDAO.getInstance().getModell();
+            return DropDownsDAO.getInstance().getModell(str);
         } catch (SQLException | DatabaseException throwables) {
             Logger.getLogger(DropDownsControl.class.getName()).log(Level.SEVERE, null, throwables);
         }

@@ -16,7 +16,7 @@
 	<properties>
 		<vaadin.version>8.10.4</vaadin.version>
 		<vaadin.plugin.version>8.10.4</vaadin.plugin.version>
-		<jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
+		<jetty.plugin.version>9.4.29.v20200521</jetty.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -70,6 +70,11 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.addon</groupId>

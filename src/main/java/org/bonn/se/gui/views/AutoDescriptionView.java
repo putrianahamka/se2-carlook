@@ -52,10 +52,9 @@ public class AutoDescriptionView extends GridLayout implements View {
                             fahrzeugDTO.setDescription(richTextArea.getValue());
                             if (dialog.isConfirmed()) {
                                 ContainerFahrzeuge.getInstance().setFahrzeug((Vertriebler) UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER));
+                                ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich angelegt");
+                                UI.getCurrent().addWindow(confirmationWindow);
                             }
-
-                            ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich angelegt");
-                            UI.getCurrent().addWindow(confirmationWindow);
 
                             UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW);
 

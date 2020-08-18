@@ -3,6 +3,7 @@ package org.bonn.se.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+
 import org.bonn.se.control.DropDownsControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
@@ -17,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AutoAnlegenView extends GridLayout implements View {
+    public static String markeStr ;
+
     public void setUp() throws DatabaseException, SQLException {
         this.setRows(15);
         this.setColumns(10);
@@ -27,7 +30,7 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         TopPanelUser topPanelUser = new TopPanelUser();
 
-
+        String str = "";
         ComboBox<String> fahrzeugZustand = new ComboBox<>("Fahrzeugzustand:", DropDownsControl.getInstance().getFahrzeugZustand());
 
         ComboBox<String> fahrzeugart = new ComboBox<>("Fahrzeugart:", DropDownsControl.getInstance().getFahrzeugArt());
@@ -36,7 +39,13 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         ComboBox<String> marke = new ComboBox<>("Marke:",DropDownsControl.getInstance().getMarke());
 
-        ComboBox<String> modell = new ComboBox<>("Modell:",DropDownsControl.getInstance().getModell());
+        ComboBox<String> modell = new ComboBox<>("Modell:",DropDownsControl.getInstance().getModell(str));
+
+        marke.addValueChangeListener(event -> {
+            modell.setValue("");
+           modell.setItems(DropDownsControl.getInstance().getModell(event.getValue()));
+        });
+
 
         ComboBox<String> fahrzeugTyp = new ComboBox<>("Fahrzeugtyp:",DropDownsControl.getInstance().getFahrzeugTyp());
 
@@ -148,6 +157,7 @@ public class AutoAnlegenView extends GridLayout implements View {
         formGrid.addComponent(abbrechen,2,7,2,7);
         formGrid.setComponentAlignment(abbrechen, Alignment.MIDDLE_CENTER);
 
+
         formGrid.setSpacing(true);
 
         //this.setComponentAlignment(topPanelUser, Alignment.TOP_LEFT);
@@ -162,6 +172,8 @@ public class AutoAnlegenView extends GridLayout implements View {
         FahrzeugDTO fahrzeugDTO = new FahrzeugDTO();
 
         abbrechen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW));
+
+
         weiter.addClickListener((Button.ClickListener) event ->{
            if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)instanceof Vertriebler) {
                fahrzeugDTO.setFahrzeugZustand(fahrzeugZustand.getValue());
