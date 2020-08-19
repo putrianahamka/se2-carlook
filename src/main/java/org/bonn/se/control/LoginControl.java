@@ -5,6 +5,7 @@ import com.vaadin.ui.UI;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
+import org.bonn.se.model.objects.entities.Kunde;
 import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.JDBCConnection;
@@ -63,9 +64,22 @@ public class LoginControl {
                     vertriebler = ProfilDAO.getInstance().getVertrieblerProfil(vertriebler);
 
                     UI.getCurrent().getSession().setAttribute(Roles.VERTRIEBLER,vertriebler);
+                    // zu els if(set.getString(5).equals("k"))
 
                 }else if(set.getString(5).equals("k")){
                     //Code for Kunde
+                    Kunde kunde = new Kunde();
+                    MyUI.getCurrent().getSession().setAttribute(Roles.KUNDE, kunde);
+
+                    kunde.setEmail(user.getEmail());
+                    kunde.setPasswort(user.getPasswort());
+                    kunde.setVorname(user.getVorname());
+                    kunde.setNachname(user.getNachname());
+
+                    kunde = ProfilDAO.getInstance().getKundenProfil(kunde);
+
+                    UI.getCurrent().getSession().setAttribute(Roles.KUNDE, kunde);
+
                 }
             }else {
                 throw new NoSuchUserOrPassword();

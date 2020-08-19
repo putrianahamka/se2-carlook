@@ -4,9 +4,9 @@ import org.bonn.se.model.objects.dto.FahrzeugDTO;
 
 import java.util.ArrayList;
 
-public class Kunden extends  User{
-    private String kontaktNr;
-    private int personalNummer;
+public class Kunde extends User{
+
+    private int kundenNummer;
     private String vorname;
     private String nachname;
     private String email;
@@ -18,7 +18,7 @@ public class Kunden extends  User{
 
 
 
-    public Kunden(){
+    public Kunde(){
         super();
         super.setType("v");
         super.setVorname(vorname);
@@ -27,15 +27,14 @@ public class Kunden extends  User{
         super.setPasswort(passwort);
     }
 
-    public Kunden(String vorname, String nachname, String email,String passwort, String type){
+    public Kunde(int kundenNummer, String vorname, String nachname, String email, String passwort, String type){
         super.setEmail(email);
-        this.kontaktNr= kontaktNr;
-        //this.personalNummer=personalNummer;
+        this.kundenNummer=kundenNummer;
         super.setPasswort(passwort);
         super.setVorname(vorname);
         super.setNachname(nachname);
         super.setPasswort(passwort);
-        setType("v");//TYpe auf K ändern
+        setType("k");//TYpe auf K ändern
 
     }
 
@@ -45,11 +44,11 @@ public class Kunden extends  User{
     public void setPersonalNummer(int personalNummer){
         this.personalNummer = personalNummer;
     }*/
-    public String getKontaktNr(){
-        return kontaktNr;
+  public int getKundenNr(){
+        return kundenNummer;
     }
-    public void setKontaktNr(String kontaktNr){
-        this.kontaktNr = kontaktNr;
+    public void setKundenNr(int kundenNr){
+        this.kundenNummer = kundenNr;
     }
     public String getVorname(){
         return vorname;
@@ -88,6 +87,6 @@ public class Kunden extends  User{
 
     @Override
     public String toString(){
-        return "" + personalNummer;
+        return "" + kundenNummer;
     }
 }

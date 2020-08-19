@@ -5,6 +5,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
+import org.bonn.se.model.objects.entities.Kunde;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -43,7 +44,9 @@ public class TopPanelUser extends HorizontalLayout {
                     ((Vertriebler)UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER)).getVorname(),null
             );
         }else{
-            //Code for Kunde-getVorname
+            item1 = bar.addItem(
+                    ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getVorname(),null
+            );
         }
 
         if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER) != null) {
@@ -51,7 +54,9 @@ public class TopPanelUser extends HorizontalLayout {
             item1.addItem("Mein Profil",VaadinIcons.USER,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERPROFIL));
             item1.addSeparator();
         }else{
-            //Code for Kunde
+            item1.addItem("Home",VaadinIcons.HOME,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.KUNDEHOMEVIEW));
+            item1.addItem("Mein Profil",VaadinIcons.USER,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.KUNDEPROFIL));
+            item1.addSeparator();
         }
 
         item1.addItem("Logout", VaadinIcons.SIGN_OUT,(MenuBar.Command) menuItem -> LoginControl.logoutUser());

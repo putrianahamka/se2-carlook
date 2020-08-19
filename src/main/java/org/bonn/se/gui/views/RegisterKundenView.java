@@ -15,7 +15,7 @@ import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entities.User;
-import org.bonn.se.model.objects.entities.Kunden;
+import org.bonn.se.model.objects.entities.Kunde;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -48,10 +48,10 @@ public class RegisterKundenView extends VerticalLayout implements View {
 
         final TextField email = new TextField();
         email.setCaption("Email:");
-
+        /*
         final TextField kontaktNr = new TextField();
         kontaktNr.setCaption("Tel. Nummer:");
-
+        */
         final PasswordField passwordField = new PasswordField();
         passwordField.setCaption("Passwort:");
 
@@ -70,17 +70,21 @@ public class RegisterKundenView extends VerticalLayout implements View {
                 .bind(User::getNachname,User::setNachname);
         binder.forField(email)
                 .asRequired("Email ist muss")
+                //ich brauche es nicht
+
                 .withValidator(new EmailValidator("Keine gültige Email!"))
                 .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Nur @carlook.de Email ist erlaubt")
                 .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email must be vorname@carlook.de")
+
                 .bind(User::getEmail,User::setEmail);
+
 
 
         VerticalLayout layout = new VerticalLayout();
 
         layout.addComponent(vorName);
         layout.addComponent(nachName);
-        layout.addComponent(kontaktNr);
+        //layout.addComponent(kontaktNr);
         layout.addComponent(email);
         layout.addComponent(passwordField);
 
@@ -90,7 +94,7 @@ public class RegisterKundenView extends VerticalLayout implements View {
         layout.setWidth("300px");
         vorName.setWidth("270px");
         nachName.setWidth("270px");
-        kontaktNr.setWidth("270px");
+        //kontaktNr.setWidth("270px");
         email.setWidth("270px");
         passwordField.setWidth("270px");
 
@@ -104,17 +108,17 @@ public class RegisterKundenView extends VerticalLayout implements View {
 
         panel.setContent(layout);
 
-        Button registerVertrieblerButton = new Button("Registrieren");
-        registerVertrieblerButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        registerVertrieblerButton.setEnabled(false);
-        layout.addComponent(registerVertrieblerButton);
+        Button registerKundenButton = new Button("Registrieren");
+        registerKundenButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        registerKundenButton.setEnabled(false);
+        layout.addComponent(registerKundenButton);
         panel.setSizeUndefined();
 
         User user = new User();
         binder.setBean(user);
 
 
-        registerVertrieblerButton.addClickListener(
+        registerKundenButton.addClickListener(
                 event -> {
                     try{
                         if (UserSearchControl.getInstance().existUser(email.getValue())){
@@ -123,31 +127,31 @@ public class RegisterKundenView extends VerticalLayout implements View {
                             email.setComponentError(new UserError("Bitte eine andere Email verwenden"));
                         } else{
                             user.setType("k");
-                            registerVertrieblerButton.setEnabled(false);
+                            registerKundenButton.setEnabled(false);
                             user.setVorname(vorName.getValue());
                             user.setNachname(nachName.getValue());
                             user.setEmail(email.getValue());
                             user.setPasswort(passwordField.getValue());
-                            user.setKontaktNr(kontaktNr.getValue());
+                           // user.setKontaktNr(kontaktNr.getValue());
 
-                            Kunden kunden = new Kunden();
-                            kunden.setEmail(user.getEmail());
-                            kunden.setVorname(user.getVorname());
-                            kunden.setNachname(user.getNachname());
-                            kunden.setPasswort(user.getPasswort());
-                            kunden.setKontaktNr(user.getKontaktNr());
+                            Kunde kunde = new Kunde();
+                            kunde.setEmail(user.getEmail());
+                            kunde.setVorname(user.getVorname());
+                            kunde.setNachname(user.getNachname());
+                            kunde.setPasswort(user.getPasswort());
+                            //kunden.setKontaktNr(user.getKontaktNr());
 
 
                             UserDAO.getInstance().registerUser(user);
 
-                            UI.getCurrent().getSession().setAttribute(Roles.KUNDE,kunden);
+                            UI.getCurrent().getSession().setAttribute(Roles.KUNDE, kunde);
 
-                            kunden = ProfilDAO.getInstance().getVertrieblerProfil(kunden);
+                            kunde = ProfilDAO.getInstance().getKundenProfil(kunde);
 
-                            UI.getCurrent().getSession().setAttribute(Roles.KUNDE,kunden);
+                            UI.getCurrent().getSession().setAttribute(Roles.KUNDE, kunde);
                             ConfirmationWindow confirmationWindow = new ConfirmationWindow("Sie haben sich erfolgreich registriert");
                             UI.getCurrent().addWindow(confirmationWindow);
-                            UI.getCurrent().getNavigator().navigateTo(Views.VERTRIEBLERHOMEVIEW);
+                            UI.getCurrent().getNavigator().navigateTo(Views.KUNDEHOMEVIEW);
                         }
                     } catch(DatabaseException | SQLException e){
                         e.printStackTrace();
@@ -155,7 +159,7 @@ public class RegisterKundenView extends VerticalLayout implements View {
                 });
 //noch anpassen
         binder.addStatusChangeListener(
-                event -> registerVertrieblerButton.setEnabled(binder.isValid())
+                event -> registerKundenButton.setEnabled(binder.isValid())
         );
     }
 

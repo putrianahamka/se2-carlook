@@ -1,5 +1,6 @@
 package org.bonn.se.model.dao;
 
+import org.bonn.se.model.objects.entities.Kunde;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -42,4 +43,28 @@ public class ProfilDAO extends AbstractDAO{
         return null;
     }
 
+    public Kunde getKundenProfil(Kunde kunde) throws DatabaseException, SQLException {
+        ResultSet set;
+        try{
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT kundennummer FROM carlook.tab_kunde WHERE email='" + kunde.getEmail()+"'");
+        } catch(SQLException | DatabaseException throwables){
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        try{
+            while(set.next()){
+                kunde.setKundenNr(set.getInt(1));
+                //kunden.setKontaktNr(set.getString(2));
+
+                return kunde;
+            }
+        } catch(SQLException  throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        }finally{
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return null;
+    }
 }

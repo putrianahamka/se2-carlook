@@ -1,4 +1,5 @@
 org\bonn\se\gui\views\VertrieblerHomeView.class
+org\bonn\se\gui\views\KundenHomeView.class
 org\bonn\se\services\db\exception\DatabaseException.class
 org\bonn\se\gui\views\AutoAnlegenView.class
 org\bonn\se\gui\views\AutoDescriptionView.class

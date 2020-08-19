@@ -31,6 +31,11 @@ public class MyUI extends UI {
         navi.addView(AUTOANLEGEN, AutoAnlegenView.class);
         navi.addView(FAHRZEUGDESCRIPTION,AutoDescriptionView.class);
 
+        navi.addView(REGISTERKUNDE, RegisterKundenView.class);
+        navi.addView(KUNDEHOMEVIEW, KundenHomeView.class);
+
+        navi.addView(KUNDEPROFIL, KundeProfilView.class);
+
 
         UI.getCurrent().getNavigator().navigateTo(LOGINVIEW);
 

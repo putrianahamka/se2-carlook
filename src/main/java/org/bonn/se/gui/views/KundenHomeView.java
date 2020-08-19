@@ -15,13 +15,11 @@ public class KundenHomeView extends VerticalLayout implements View {
         GridLayout mainGrid = new GridLayout(3,3);
 
         mainGrid.setSizeFull();
-        Button autoBuchen = new Button("Auto buchen");
-        autoBuchen.addClickListener((Button.ClickListener)event -> UI.getCurrent().getNavigator().navigateTo(Views.AUTOANLEGEN));
+
         VerticalLayout verticalLayout = new VerticalLayout();
 
         verticalLayout.setMargin(true);
-        verticalLayout.addComponent(autoBuchen);
-        verticalLayout.setComponentAlignment(autoBuchen, Alignment.MIDDLE_CENTER);
+
         mainGrid.addComponent(verticalLayout);
         this.addComponent(mainGrid);
         this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
@@ -30,9 +28,9 @@ public class KundenHomeView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
             this.setUp();
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.VERTRIEBLER) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
             UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
