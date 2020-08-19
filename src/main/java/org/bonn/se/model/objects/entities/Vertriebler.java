@@ -5,6 +5,7 @@ import org.bonn.se.model.objects.dto.FahrzeugDTO;
 import java.util.ArrayList;
 
 public class Vertriebler extends  User{
+
     private String kontaktNr;
     private int personalNummer;
     private String vorname;
