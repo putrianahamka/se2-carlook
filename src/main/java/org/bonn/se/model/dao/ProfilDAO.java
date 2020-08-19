@@ -17,7 +17,7 @@ public class ProfilDAO extends AbstractDAO{
         return instance == null ? instance = new ProfilDAO() : instance;
     }
 
-    public Vertriebler getVertrieblerProfil(Vertriebler vertriebler) throws DatabaseException, SQLException {
+    public Vertriebler  getVertrieblerProfil(Vertriebler vertriebler) throws DatabaseException, SQLException {
         ResultSet set;
         try{
             Statement statement = JDBCConnection.getInstance().getStatement();
