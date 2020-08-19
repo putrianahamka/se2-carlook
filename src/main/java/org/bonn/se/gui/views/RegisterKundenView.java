@@ -28,9 +28,9 @@ public class RegisterKundenView extends VerticalLayout implements View {
     public void setUp(){
         //this.setSizeFull();
 
-        Label head = new Label ("Registrieren Sie sich als Kunden", ContentMode.HTML);
+        Label head = new Label ("Registrieren Sie sich als Kunde", ContentMode.HTML);
 
-        this.addComponent(new TopPanel("Kunde"));
+        this.addComponent(new TopPanel("kunde"));
 
         head.setSizeUndefined();
         head.addStyleName("headLabel");
