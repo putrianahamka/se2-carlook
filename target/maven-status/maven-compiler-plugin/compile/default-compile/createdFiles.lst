@@ -18,6 +18,7 @@ org\bonn\se\model\dao\ContainerFahrzeugDAO.class
 org\bonn\se\services\util\Password.class
 org\bonn\se\gui\views\AutoDescriptionView$1.class
 org\bonn\se\model\objects\dto\FahrzeugDTO.class
+org\bonn\se\gui\views\KundeProfilView.class
 org\bonn\se\model\dao\AbstractDAO.class
 org\bonn\se\gui\views\RegisterVertrieblerView.class
 org\bonn\se\control\DropDownsControl.class
@@ -30,5 +31,6 @@ org\bonn\se\gui\component\TopPanelUser.class
 org\bonn\se\gui\component\ConfirmationWindow.class
 org\bonn\se\gui\ui\MyUI$MyUIServlet.class
 org\bonn\se\gui\views\LoginView.class
+org\bonn\se\model\objects\entities\Kunde.class
 org\bonn\se\gui\views\AutoDescriptionView$1$1.class
 org\bonn\se\model\dao\ProfilDAO.class
