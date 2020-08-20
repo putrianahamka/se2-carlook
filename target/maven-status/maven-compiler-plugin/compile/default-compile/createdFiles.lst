@@ -7,7 +7,6 @@ org\bonn\se\model\objects\entities\ContainerFahrzeuge.class
 org\bonn\se\gui\views\RegisterKundenView.class
 org\bonn\se\gui\views\VertrieblerProfilView.class
 org\bonn\se\control\UserSearchControl.class
-org\bonn\se\model\objects\entities\Kunden.class
 org\bonn\se\services\db\JDBCConnection.class
 org\bonn\se\control\exception\NoSuchUserOrPassword.class
 org\bonn\se\gui\window\FahrzeugWindow.class

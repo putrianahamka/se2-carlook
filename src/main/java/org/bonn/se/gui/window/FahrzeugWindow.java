@@ -1,11 +1,13 @@
 package org.bonn.se.gui.window;
 
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -30,10 +32,15 @@ public class FahrzeugWindow extends Window {
         Panel panel = new Panel();
         panel.setWidthFull();
 
-        GridLayout gridLayout = new GridLayout(5,17);
+        Button reservierung = new Button("Reservieren");
+
+        GridLayout gridLayout = new GridLayout(5,18);
         gridLayout.setWidthFull();
         gridLayout.setHeightUndefined();
         gridLayout.setMargin(true);
+
+
+
 
         Label shortDescription = new Label("<b>" + fahrzeugDTO.getShortDescription()+ "</b>",ContentMode.HTML);
         Label fahrzeugzustand = new Label ("<b>Fahrzeugzustand</b>",ContentMode.HTML);
@@ -86,6 +93,11 @@ public class FahrzeugWindow extends Window {
         Label umweltplaketteData = new Label(fahrzeugDTO.getUmweltplakette());
         Label schadenstoffklasseData = new Label(fahrzeugDTO.getSchadenstoffklasse());
         Label publishedData = new Label(String.valueOf(fahrzeugDTO.getZeitstempel()));
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null){
+            gridLayout.addComponent(reservierung,3,13);
+            gridLayout.setComponentAlignment(reservierung, Alignment.MIDDLE_LEFT);
+        }
 
         gridLayout.addComponent(shortDescription,0,0,4,0);
         gridLayout.setComponentAlignment(shortDescription, Alignment.MIDDLE_CENTER);
@@ -156,9 +168,12 @@ public class FahrzeugWindow extends Window {
         gridLayout.addComponent(description,0,13);
         gridLayout.addComponent(descriptionData,0,14,4,16);
 
+        //baris 17
 
         panel.setContent(gridLayout);
         this.setContent(panel);
     }
+
+
 
 }
