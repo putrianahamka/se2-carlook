@@ -3,8 +3,12 @@ package org.bonn.se.gui.window;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.gui.component.ConfirmationWindow;
+import org.bonn.se.model.dao.ContainerFahrzeugDAO;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
+import org.bonn.se.model.objects.entities.Kunde;
 import org.bonn.se.model.objects.entities.Vertriebler;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -33,6 +37,26 @@ public class FahrzeugWindow extends Window {
         panel.setWidthFull();
 
         Button reservierung = new Button("Reservieren");
+
+        reservierung.addClickListener((Button.ClickListener) event ->
+            {
+              int kundeNummer = ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+              int fahrzeugId = fahrzeugDTO.getId();
+
+                try {
+                    ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundeNummer, fahrzeugId);
+                    ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich reserviert");
+                    UI.getCurrent().addWindow(confirmationWindow);
+                } catch (DatabaseException e) {
+                    Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
+                    ConfirmationWindow confirmationWindow = new ConfirmationWindow("Sie haben das Auto bereits reserviert");
+                    UI.getCurrent().addWindow(confirmationWindow);
+
+                }
+            }
+
+
+        );
 
         GridLayout gridLayout = new GridLayout(5,18);
         gridLayout.setWidthFull();

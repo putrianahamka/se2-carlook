@@ -70,11 +70,8 @@ public class RegisterKundenView extends VerticalLayout implements View {
                 .bind(User::getNachname,User::setNachname);
         binder.forField(email)
                 .asRequired("Email ist muss")
-                //ich brauche es nicht
 
                 .withValidator(new EmailValidator("Keine gültige Email!"))
-                .withValidator(emailField -> emailField.endsWith("@carlook.de"),"Nur @carlook.de Email ist erlaubt")
-                .withValidator(emailField -> emailField.startsWith(vorName.getValue().toLowerCase()),"Email must be vorname@carlook.de")
 
                 .bind(User::getEmail,User::setEmail);
 

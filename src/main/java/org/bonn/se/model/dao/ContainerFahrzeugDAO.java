@@ -22,6 +22,30 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
         return instance;
     }
 
+    public void setAutoReservierung (int kundenNummer, int fahrzeugid )throws DatabaseException{
+        /*
+        statement.setDate(23,Date.valueOf(LocalDate.now()));
+
+         */
+        String sql = "INSERT INTO carlook.tab_reservierungsliste (kundennummer, fahrzeug_id, zeitstample)" +
+                "VALUES (?,?,?)";
+        PreparedStatement statement = getPreparedStatement(sql);
+        try{
+            assert statement != null;
+            statement.setInt(1, kundenNummer);
+            statement.setInt(2, fahrzeugid);
+            statement.setDate(3,Date.valueOf(LocalDate.now()));
+            statement.executeUpdate();
+
+        } catch(SQLException throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
+
     public void setFahrzeug(Vertriebler vertriebler) throws DatabaseException{
         String sql = "INSERT INTO carlook.tab_fahrzeug (fahrzeugzustand,short_description,marke,modell,fahrzeugtyp,erstzulassung," +
                 "kaufpreis,kilometer,leistung,kraftstoffart,getriebe,tuev,aussenfarbe,anzahl_tueren,anzahl_sitzplaetze,klimaanlage,fahrzeugart,anzahl_fahrzeughalter," +
