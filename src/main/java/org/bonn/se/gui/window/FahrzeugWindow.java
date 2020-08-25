@@ -37,6 +37,7 @@ public class FahrzeugWindow extends Window {
         panel.setWidthFull();
 
         Button reservierung = new Button("Reservieren");
+        Button close = new Button("Zurück");
 
         reservierung.addClickListener((Button.ClickListener) event ->
             {
@@ -57,8 +58,10 @@ public class FahrzeugWindow extends Window {
 
 
         );
+        close.addClickListener((Button.ClickListener) event ->
+                this.close() );
 
-        GridLayout gridLayout = new GridLayout(5,18);
+        GridLayout gridLayout = new GridLayout(5,19);
         gridLayout.setWidthFull();
         gridLayout.setHeightUndefined();
         gridLayout.setMargin(true);
@@ -119,8 +122,7 @@ public class FahrzeugWindow extends Window {
         Label publishedData = new Label(String.valueOf(fahrzeugDTO.getZeitstempel()));
 
         if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null){
-            gridLayout.addComponent(reservierung,3,13);
-            gridLayout.setComponentAlignment(reservierung, Alignment.MIDDLE_LEFT);
+            gridLayout.addComponent(reservierung,4,18);
         }
 
         gridLayout.addComponent(shortDescription,0,0,4,0);
@@ -192,7 +194,8 @@ public class FahrzeugWindow extends Window {
         gridLayout.addComponent(description,0,13);
         gridLayout.addComponent(descriptionData,0,14,4,16);
 
-        //baris 17
+        gridLayout.addComponent(close,3,18);
+
 
         panel.setContent(gridLayout);
         this.setContent(panel);

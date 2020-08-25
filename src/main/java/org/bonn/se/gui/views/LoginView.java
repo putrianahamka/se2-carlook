@@ -36,13 +36,17 @@ public class LoginView extends VerticalLayout implements View {
 
         final TextField email = new TextField();
         email.setCaption("E-Mail:");
+        email.setWidth("300px");
 
         final PasswordField passwordField = new PasswordField();
         passwordField.setCaption("Passwort:");
+        passwordField.setWidth("300px");
 
        VerticalLayout verticalLayout = new VerticalLayout();
        verticalLayout.addComponent(email);
        verticalLayout.addComponent(passwordField);
+        verticalLayout.setComponentAlignment(email,Alignment.MIDDLE_CENTER);
+        verticalLayout.setComponentAlignment(passwordField,Alignment.MIDDLE_CENTER);
 
        Panel panel = new Panel("Bitte Login-Daten eingeben:");
 
@@ -54,8 +58,10 @@ public class LoginView extends VerticalLayout implements View {
        Button loginButton = new Button("Login", VaadinIcons.SIGN_IN);
        loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
        verticalLayout.addComponent(loginButton);
+       verticalLayout.setComponentAlignment(loginButton,Alignment.MIDDLE_CENTER);
 
        panel.setSizeUndefined();
+       panel.setWidth("350px");
 
        loginButton.addClickListener( (Button.ClickListener) clickEvent -> {
            String userEmail = email.getValue();

@@ -154,13 +154,13 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
         return liste;
 
     }
-//noch Methode für erste 5 getAlleFahrzeuge
+
     public List<FahrzeugDTO> getFahrzeug(){
         Statement statement = this.getStatement();
         ResultSet rs = null;
 
         try{
-            rs = statement.executeQuery("SELECT * FROM carlook.tab_fahrzeug LIMIT 5 ");
+            rs = statement.executeQuery("SELECT * FROM carlook.tab_fahrzeug ORDER BY zeitstample DESC LIMIT 5 ");
         }catch(SQLException ex){
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -210,5 +210,128 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return liste;
+    }
+
+    public List<FahrzeugDTO> loadFahrzeuge(String marke, String modell, String typ, LocalDate erstAb, LocalDate erstBis, String preisAb, String preisBis
+            ,String kilometerAb, String kilometerBis,String kraftstoffart,String getriebe,String aussenfarbe,String umweltplakette,
+                                           String schadenstoffklsse,String klima){
+        List<FahrzeugDTO> liste = new ArrayList<>();
+        if (marke == null){
+            marke = "%";
+        }
+        if (modell == null){
+            modell = "%";
+        }else if (modell == ""){
+            modell = "%";
+        }
+        if (typ == null){
+            typ = "%";
+        }
+        if (kraftstoffart == null){
+            kraftstoffart = "%";
+        }
+        if (getriebe == null){
+            getriebe = "%";
+        }
+        if (aussenfarbe == null){
+            aussenfarbe = "%";
+        }
+        if (umweltplakette == null){
+            umweltplakette = "%";
+        }
+        if (schadenstoffklsse == null){
+            schadenstoffklsse = "%";
+        }
+        if (klima == null){
+            klima = "%";
+        }
+        StringBuilder erstzuAb = new StringBuilder(" ");
+        StringBuilder erstzuBis = new StringBuilder(" ");
+
+        Date dateAb = erstAb == null ? null: Date.valueOf(erstAb);
+        Date dateBis = erstBis == null ? null: Date.valueOf(erstBis);
+
+        erstzuAb = new StringBuilder(dateAb == null ? "1900-01-01" : " " +dateAb);
+        erstzuBis = new StringBuilder(dateBis == null ? "9999-01-01" : " " +dateBis);
+
+        if(preisAb == null){
+            preisAb = "0";
+        }
+        if(preisBis == null){
+            preisBis = "1000000000";
+        }
+        if(kilometerAb == null){
+            kilometerAb = "0";
+        }
+        if(kilometerBis == null){
+            kilometerBis = "1000000000";
+        }
+
+        ResultSet set = null;
+        Statement statement = this.getStatement();
+        try{
+            set = statement.executeQuery("SELECT * FROM carlook.tab_fahrzeug WHERE carlook.tab_fahrzeug.marke LIKE" +
+                    "\'" + marke + "\' AND carlook.tab_fahrzeug.kaufpreis >=\'" + preisAb + "\'" +
+                    "AND carlook.tab_fahrzeug.kaufpreis <=\'" + preisBis + "\'" +
+                    "AND carlook.tab_fahrzeug.modell LIKE \'" + modell + "\'" +
+                    "AND carlook.tab_fahrzeug.fahrzeugtyp LIKE \'" + typ + "\'" +
+                    "AND carlook.tab_fahrzeug.kraftstoffart LIKE \'" + kraftstoffart + "\'" +
+                    "AND carlook.tab_fahrzeug.getriebe LIKE \'" + getriebe + "\'" +
+                    "AND carlook.tab_fahrzeug.aussenfarbe LIKE \'" + aussenfarbe + "\'" +
+                    "AND carlook.tab_fahrzeug.umweltplakette LIKE \'" + umweltplakette + "\'" +
+                    "AND carlook.tab_fahrzeug.schadenstoffklasse LIKE \'" + schadenstoffklsse + "\'" +
+                    "AND carlook.tab_fahrzeug.klimaanlage LIKE \'" + klima + "\'" +
+                    "AND carlook.tab_fahrzeug.erstzulassung >= \'" + erstzuAb + "\'" +
+                    "AND carlook.tab_fahrzeug.erstzulassung <= \'" + erstzuBis + "\'" +
+                    "AND carlook.tab_fahrzeug.kilometer >= \'" + kilometerAb + "\'" +
+                    "AND carlook.tab_fahrzeug.kilometer <= \'" + kilometerBis + "\'");
+
+
+        }catch(SQLException ex){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (set == null){
+            System.out.println("Liste ist leer");
+            return null;
+        }
+        FahrzeugDTO fahrzeugDTO =null;
+        try {
+            while (set.next()) {
+                //fahrzeugDTO.setId(rs.getInt(1));
+                fahrzeugDTO = new FahrzeugDTO();
+                fahrzeugDTO.setId(set.getInt(1));
+                fahrzeugDTO.setFahrzeugZustand(set.getString(2));
+                fahrzeugDTO.setShortDescription(set.getString(3));
+                fahrzeugDTO.setMarke(set.getString(4));
+                fahrzeugDTO.setModell(set.getString(5));
+                fahrzeugDTO.setFahrzeugTyp(set.getString(6));
+                fahrzeugDTO.setErstzulassung(LocalDate.parse(set.getString(7)));
+                fahrzeugDTO.setPreis(set.getInt(8));
+                fahrzeugDTO.setKilometer(set.getInt(9));
+                fahrzeugDTO.setLeistung(set.getInt(10));
+                fahrzeugDTO.setKraftstoffart(set.getString(11));
+                fahrzeugDTO.setGetriebe(set.getString(12));
+                fahrzeugDTO.setTuev(LocalDate.parse(set.getString(13)));
+                fahrzeugDTO.setAussenfarbe(set.getString(14));
+                fahrzeugDTO.setAnzahlTueren(set.getString(15));
+                fahrzeugDTO.setAnzahlSitzplaetze(set.getInt(16));
+                fahrzeugDTO.setKlimaanlage(set.getString(17));
+                fahrzeugDTO.setFahrzeugart(set.getString(18));
+                fahrzeugDTO.setAnzahlFahrzeughalter(set.getInt(19));
+                fahrzeugDTO.setSchadenstoffklasse(set.getString(20));
+                fahrzeugDTO.setUmweltplakette(set.getString(21));
+                fahrzeugDTO.setDescription(set.getString(22));
+                fahrzeugDTO.setGarantie(set.getString(23));
+                fahrzeugDTO.setZeitstempel(Date.valueOf(set.getString(24)));
+                fahrzeugDTO.setPersonalnummer(set.getInt(25));
+
+                liste.add(fahrzeugDTO);
+            }
+        }catch(SQLException throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return liste;
+
+
     }
 }
