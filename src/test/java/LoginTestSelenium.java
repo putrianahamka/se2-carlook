@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 public class LoginTestSelenium {
     public static void main(String[] args) throws MalformedURLException {
 
-        System.setProperty("webdriver.gecko.driver","D:\\6. Semester\\SE2\\Hausarbeit\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver","src/test/java/geckodriver.exe");
         DesiredCapabilities capabilities=DesiredCapabilities.firefox();
         capabilities.setCapability("marionette", true);
         WebDriver driver = new FirefoxDriver(capabilities);
