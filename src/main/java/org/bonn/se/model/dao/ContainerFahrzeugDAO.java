@@ -334,4 +334,27 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
 
 
     }
+    public boolean isReserviert(int kundennummer, int fahrzeug_id) throws DatabaseException, SQLException {
+
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
+        try {
+            set = statement.executeQuery("SELECT * "
+                    + "FROM carlook.tab_reservierungsliste "
+                    + "WHERE carlook.tab_reservierungsliste.kundennummer = \'" + kundennummer + "\'" +
+                    " AND carlook.tab_reservierungsliste.fahrzeug_id = \'" + fahrzeug_id + "\'");
+
+            while (set.next()) {
+                return set.getInt(1) == kundennummer && set.getInt(2) == fahrzeug_id;
+            }
+        } catch (SQLException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return false;
+    }
 }

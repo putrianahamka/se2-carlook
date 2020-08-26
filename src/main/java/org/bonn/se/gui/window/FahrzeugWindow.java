@@ -19,11 +19,11 @@ import java.util.logging.Logger;
 
 public class FahrzeugWindow extends Window {
 
-    public FahrzeugWindow(FahrzeugDTO fahrzeugDTO){
+    public FahrzeugWindow(FahrzeugDTO fahrzeugDTO)throws  DatabaseException{
         setUp(fahrzeugDTO);
     }
 
-    public void setUp(FahrzeugDTO fahrzeugDTO){
+    public void setUp(FahrzeugDTO fahrzeugDTO) throws  DatabaseException{
 
         center();
         this.setWidth("80%");
@@ -39,15 +39,17 @@ public class FahrzeugWindow extends Window {
         Button reservierung = new Button("Reservieren");
         Button close = new Button("Zurück");
 
+        int kundeNummer = ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+        int fahrzeugId = fahrzeugDTO.getId();
+
         reservierung.addClickListener((Button.ClickListener) event ->
             {
-              int kundeNummer = ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
-              int fahrzeugId = fahrzeugDTO.getId();
-
                 try {
                     ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundeNummer, fahrzeugId);
                     ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich reserviert");
                     UI.getCurrent().addWindow(confirmationWindow);
+                    reservierung.setEnabled(false);
+                    reservierung.setCaption("Reserviert");
                 } catch (DatabaseException e) {
                     Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
                     ConfirmationWindow confirmationWindow = new ConfirmationWindow("Sie haben das Auto bereits reserviert");
@@ -121,9 +123,22 @@ public class FahrzeugWindow extends Window {
         Label schadenstoffklasseData = new Label(fahrzeugDTO.getSchadenstoffklasse());
         Label publishedData = new Label(String.valueOf(fahrzeugDTO.getZeitstempel()));
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null){
-            gridLayout.addComponent(reservierung,4,18);
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
+            try {
+                if (ContainerFahrzeugDAO.getInstance().isReserviert(kundeNummer, fahrzeugId)) {
+                    gridLayout.addComponent(reservierung, 4, 18);
+                    reservierung.setEnabled(false);
+                    reservierung.setCaption("Reserviert");
+                } else {
+                    gridLayout.addComponent(reservierung, 4, 18);
+                }
+            } catch (DatabaseException | SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
 
         gridLayout.addComponent(shortDescription,0,0,4,0);
         gridLayout.setComponentAlignment(shortDescription, Alignment.MIDDLE_CENTER);
