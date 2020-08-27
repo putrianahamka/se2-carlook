@@ -23,6 +23,37 @@ public class DropDownsDAO extends AbstractDAO{
         return instance;
     }
 
+    public List<String> getNumbers()throws DatabaseException, SQLException {
+        ResultSet set = null;
+        List<String> numbersList = new ArrayList<>();
+
+        try{
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT numbers FROM carlook.tab_numbers");
+            while (true){
+                assert set != null;
+                if(!set.next())break;
+                numbersList.add(set.getString(1));
+            }
+        }catch(SQLException | DatabaseException throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        }finally {
+            assert set != null;
+            try{
+                set.close();
+            }catch(SQLException throwables){
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
+            }
+            try{
+                JDBCConnection.getInstance().closeConnection();
+            }catch(DatabaseException e){
+                e.printStackTrace();
+            }
+        }
+        return numbersList;
+    }
+
+
     public List<String> getMarke()throws DatabaseException, SQLException {
         ResultSet set = null;
         List<String> markenList = new ArrayList<>();

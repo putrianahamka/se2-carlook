@@ -56,7 +56,7 @@ public class TopPanelUser extends HorizontalLayout {
         }else{
             item1.addItem("Home",VaadinIcons.HOME,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.KUNDEHOMEVIEW));
             item1.addItem("Mein Profil",VaadinIcons.USER,(MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.KUNDEPROFIL));
-            item1.addItem("Meine Reservierungliste",VaadinIcons.USER,(MenuBar.Command)menuItem ->UI.getCurrent().getNavigator().navigateTo(Views.AUTORESERVIERUNG));
+            item1.addItem("Meine Reservierungliste",VaadinIcons.CAR,(MenuBar.Command)menuItem ->UI.getCurrent().getNavigator().navigateTo(Views.AUTORESERVIERUNG));
             item1.addSeparator();
         }
 

@@ -96,6 +96,16 @@ public class DropDownsControl {
         return null;
     }
 
+    public List<String> getNumbers()  {
+        try {
+            return DropDownsDAO.getInstance().getNumbers();
+        } catch (SQLException | DatabaseException throwables) {
+            Logger.getLogger(DropDownsControl.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return null;
+    }
+
+
     public List<String> getUmweltplakette()  {
         try {
             return DropDownsDAO.getInstance().getUmweltplakette();
