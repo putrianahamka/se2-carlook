@@ -19,6 +19,9 @@ import java.util.logging.Logger;
 
 public class FahrzeugWindow extends Window {
 
+    private int kundenNummer;
+    private int fahrzeugId;
+
     public FahrzeugWindow(FahrzeugDTO fahrzeugDTO)throws  DatabaseException{
         setUp(fahrzeugDTO);
     }
@@ -39,13 +42,17 @@ public class FahrzeugWindow extends Window {
         Button reservierung = new Button("Reservieren");
         Button close = new Button("Zurück");
 
-        int kundeNummer = ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
-        int fahrzeugId = fahrzeugDTO.getId();
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
+            this.kundenNummer = ((Kunde) UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+            this.fahrzeugId = fahrzeugDTO.getId();
+        }
 
         reservierung.addClickListener((Button.ClickListener) event ->
+        //int kundeNummer = ((Kunde) UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+        //int fahrzeugId = fahrzeugDTO.getId();
             {
                 try {
-                    ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundeNummer, fahrzeugId);
+                    ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundenNummer, fahrzeugId);
                     ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich reserviert");
                     UI.getCurrent().addWindow(confirmationWindow);
                     reservierung.setEnabled(false);
@@ -125,7 +132,7 @@ public class FahrzeugWindow extends Window {
 
         if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
             try {
-                if (ContainerFahrzeugDAO.getInstance().isReserviert(kundeNummer, fahrzeugId)) {
+                if (ContainerFahrzeugDAO.getInstance().isReserviert(kundenNummer, fahrzeugId)) {
                     gridLayout.addComponent(reservierung, 4, 18);
                     reservierung.setEnabled(false);
                     reservierung.setCaption("Reserviert");
