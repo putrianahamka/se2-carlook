@@ -11,6 +11,8 @@ public class Views {
     public static final String LOGINVIEW = "loginView";
 
     public static final String AUTOANLEGEN = "autoAnlegen";
+    public static final String AUTORESERVIERUNG = "autoReservieren";
+
 
     public static final String VERTRIEBLERPROFIL = "vertrieblerProfil";
     public static final String FAHRZEUGDESCRIPTION = "fahrzeugDescription";

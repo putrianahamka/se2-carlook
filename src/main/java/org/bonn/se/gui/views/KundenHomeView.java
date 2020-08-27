@@ -35,7 +35,7 @@ public class KundenHomeView extends VerticalLayout implements View {
 
         List<FahrzeugDTO> liste = ContainerFahrzeugDAO.getInstance().getFahrzeug();
         grid.setItems(liste);
-        grid.setCaption("Meine Fahrzeuge: " + liste.size());
+        grid.setCaption("Fahrzeugliste: " + liste.size());
 
         grid.addColumn(FahrzeugDTO::getFahrzeugZustand).setCaption("Fahrzeugzustand");
         grid.addColumn(FahrzeugDTO::getMarke).setCaption("Marke");

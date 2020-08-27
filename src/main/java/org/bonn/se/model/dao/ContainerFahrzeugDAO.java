@@ -154,6 +154,70 @@ public class ContainerFahrzeugDAO extends AbstractDAO {
         return liste;
 
     }
+
+
+    public List<FahrzeugDTO> getFahrzeugByKundenummer(int kundeNummer){
+        Statement statement = this.getStatement();
+        ResultSet rs = null;
+
+        try{
+            rs = statement.executeQuery("SELECT f.* " +
+                    " FROM carlook.tab_fahrzeug f" +
+                    " INNER JOIN carlook.tab_reservierungsliste r" +
+                    " ON f.fahrzeug_id = r.fahrzeug_id" +
+                    " AND r.kundennummer= \'" + kundeNummer + "\'");
+
+        }catch(SQLException ex){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (rs == null){
+            System.out.println("Liste ist leer");
+            return null;
+        }
+        FahrzeugDTO fahrzeugDTO =null;
+        List<FahrzeugDTO> liste = new ArrayList<>();
+
+        try{
+            while(rs.next()){
+                //fahrzeugDTO.setId(rs.getInt(1));
+                fahrzeugDTO = new FahrzeugDTO();
+
+                fahrzeugDTO.setId(rs.getInt(1));
+                fahrzeugDTO.setFahrzeugZustand(rs.getString(2));
+                fahrzeugDTO.setShortDescription(rs.getString(3));
+                fahrzeugDTO.setMarke(rs.getString(4));
+                fahrzeugDTO.setModell(rs.getString(5));
+                fahrzeugDTO.setFahrzeugTyp(rs.getString(6));
+                fahrzeugDTO.setErstzulassung(LocalDate.parse(rs.getString(7)));
+                fahrzeugDTO.setPreis(rs.getInt(8));
+                fahrzeugDTO.setKilometer(rs.getInt(9));
+                fahrzeugDTO.setLeistung(rs.getInt(10));
+                fahrzeugDTO.setKraftstoffart(rs.getString(11));
+                fahrzeugDTO.setGetriebe(rs.getString(12));
+                fahrzeugDTO.setTuev(LocalDate.parse(rs.getString(13)));
+                fahrzeugDTO.setAussenfarbe(rs.getString(14));
+                fahrzeugDTO.setAnzahlTueren(rs.getString(15));
+                fahrzeugDTO.setAnzahlSitzplaetze(rs.getInt(16));
+                fahrzeugDTO.setKlimaanlage(rs.getString(17));
+                fahrzeugDTO.setFahrzeugart(rs.getString(18));
+                fahrzeugDTO.setAnzahlFahrzeughalter(rs.getInt(19));
+                fahrzeugDTO.setSchadenstoffklasse(rs.getString(20));
+                fahrzeugDTO.setUmweltplakette(rs.getString(21));
+                fahrzeugDTO.setDescription(rs.getString(22));
+                fahrzeugDTO.setGarantie(rs.getString(23));
+                fahrzeugDTO.setZeitstempel(Date.valueOf(rs.getString(24)));
+                fahrzeugDTO.setPersonalnummer(rs.getInt(25));
+
+                liste.add(fahrzeugDTO);
+
+
+            }
+        }catch(SQLException throwables){
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return liste;
+
+    }
 //noch Methode für erste 5 getAlleFahrzeuge
     public List<FahrzeugDTO> getFahrzeug(){
         Statement statement = this.getStatement();

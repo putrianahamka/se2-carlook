@@ -5,6 +5,7 @@ import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -29,6 +30,7 @@ public class MyUI extends UI {
         navi.addView(LOGINVIEW, LoginView.class);
         navi.addView(VERTRIEBLERPROFIL, VertrieblerProfilView.class);
         navi.addView(AUTOANLEGEN, AutoAnlegenView.class);
+        navi.addView(AUTORESERVIERUNG, AutoReservierenView.class);
         navi.addView(FAHRZEUGDESCRIPTION,AutoDescriptionView.class);
 
         navi.addView(REGISTERKUNDE, RegisterKundenView.class);
