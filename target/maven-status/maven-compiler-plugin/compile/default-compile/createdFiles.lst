@@ -18,6 +18,7 @@ org\bonn\se\model\dao\ContainerFahrzeugDAO.class
 org\bonn\se\services\util\Password.class
 org\bonn\se\gui\views\AutoDescriptionView$1.class
 org\bonn\se\model\objects\dto\FahrzeugDTO.class
+org\bonn\se\gui\views\AutoReservierenView.class
 org\bonn\se\gui\views\KundeProfilView.class
 org\bonn\se\model\dao\AbstractDAO.class
 org\bonn\se\gui\views\RegisterVertrieblerView.class

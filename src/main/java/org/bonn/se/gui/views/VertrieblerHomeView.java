@@ -11,6 +11,7 @@ import org.bonn.se.gui.window.FahrzeugWindow;
 import org.bonn.se.model.dao.ContainerFahrzeugDAO;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
 import org.bonn.se.model.objects.entities.Vertriebler;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
@@ -60,7 +61,11 @@ public class VertrieblerHomeView extends VerticalLayout implements View {
         grid.asSingleSelect().addSingleSelectionListener((SingleSelectionListener<FahrzeugDTO>) event -> {
             if(event.getValue() != null){
                 //System.out.println("ok " + event.getValue());
-                UI.getCurrent().addWindow(new FahrzeugWindow(event.getValue()));
+                try {
+                    UI.getCurrent().addWindow(new FahrzeugWindow(event.getValue()));
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
             }
             grid.deselectAll();
         });

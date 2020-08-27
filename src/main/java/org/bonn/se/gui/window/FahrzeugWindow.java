@@ -19,11 +19,14 @@ import java.util.logging.Logger;
 
 public class FahrzeugWindow extends Window {
 
-    public FahrzeugWindow(FahrzeugDTO fahrzeugDTO){
+    private int kundenNummer;
+    private int fahrzeugId;
+
+    public FahrzeugWindow(FahrzeugDTO fahrzeugDTO)throws  DatabaseException{
         setUp(fahrzeugDTO);
     }
 
-    public void setUp(FahrzeugDTO fahrzeugDTO){
+    public void setUp(FahrzeugDTO fahrzeugDTO) throws  DatabaseException{
 
         center();
         this.setWidth("80%");
@@ -37,16 +40,23 @@ public class FahrzeugWindow extends Window {
         panel.setWidthFull();
 
         Button reservierung = new Button("Reservieren");
+        Button close = new Button("Zurück");
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
+            this.kundenNummer = ((Kunde) UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+            this.fahrzeugId = fahrzeugDTO.getId();
+        }
 
         reservierung.addClickListener((Button.ClickListener) event ->
+        //int kundeNummer = ((Kunde) UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
+        //int fahrzeugId = fahrzeugDTO.getId();
             {
-              int kundeNummer = ((Kunde)UI.getCurrent().getSession().getAttribute(Roles.KUNDE)).getKundenNr();
-              int fahrzeugId = fahrzeugDTO.getId();
-
                 try {
-                    ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundeNummer, fahrzeugId);
+                    ContainerFahrzeugDAO.getInstance().setAutoReservierung(kundenNummer, fahrzeugId);
                     ConfirmationWindow confirmationWindow = new ConfirmationWindow("Auto wurde erfolgreich reserviert");
                     UI.getCurrent().addWindow(confirmationWindow);
+                    reservierung.setEnabled(false);
+                    reservierung.setCaption("Reserviert");
                 } catch (DatabaseException e) {
                     Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
                     ConfirmationWindow confirmationWindow = new ConfirmationWindow("Sie haben das Auto bereits reserviert");
@@ -57,8 +67,10 @@ public class FahrzeugWindow extends Window {
 
 
         );
+        close.addClickListener((Button.ClickListener) event ->
+                this.close() );
 
-        GridLayout gridLayout = new GridLayout(5,18);
+        GridLayout gridLayout = new GridLayout(5,19);
         gridLayout.setWidthFull();
         gridLayout.setHeightUndefined();
         gridLayout.setMargin(true);
@@ -118,10 +130,22 @@ public class FahrzeugWindow extends Window {
         Label schadenstoffklasseData = new Label(fahrzeugDTO.getSchadenstoffklasse());
         Label publishedData = new Label(String.valueOf(fahrzeugDTO.getZeitstempel()));
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null){
-            gridLayout.addComponent(reservierung,3,13);
-            gridLayout.setComponentAlignment(reservierung, Alignment.MIDDLE_LEFT);
+        if (UI.getCurrent().getSession().getAttribute(Roles.KUNDE) != null) {
+            try {
+                if (ContainerFahrzeugDAO.getInstance().isReserviert(kundenNummer, fahrzeugId)) {
+                    gridLayout.addComponent(reservierung, 4, 18);
+                    reservierung.setEnabled(false);
+                    reservierung.setCaption("Reserviert");
+                } else {
+                    gridLayout.addComponent(reservierung, 4, 18);
+                }
+            } catch (DatabaseException | SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
 
         gridLayout.addComponent(shortDescription,0,0,4,0);
         gridLayout.setComponentAlignment(shortDescription, Alignment.MIDDLE_CENTER);
@@ -192,7 +216,8 @@ public class FahrzeugWindow extends Window {
         gridLayout.addComponent(description,0,13);
         gridLayout.addComponent(descriptionData,0,14,4,16);
 
-        //baris 17
+        gridLayout.addComponent(close,3,18);
+
 
         panel.setContent(gridLayout);
         this.setContent(panel);

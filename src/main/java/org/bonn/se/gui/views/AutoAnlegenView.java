@@ -1,5 +1,6 @@
 package org.bonn.se.gui.views;
 
+import com.vaadin.data.Binder;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
@@ -7,6 +8,7 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.DropDownsControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.FahrzeugDTO;
+import org.bonn.se.model.objects.entities.User;
 import org.bonn.se.model.objects.entities.Vertriebler;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -33,6 +35,7 @@ public class AutoAnlegenView extends GridLayout implements View {
         String str = "";
         ComboBox<String> fahrzeugZustand = new ComboBox<>("Fahrzeugzustand:", DropDownsControl.getInstance().getFahrzeugZustand());
 
+
         ComboBox<String> fahrzeugart = new ComboBox<>("Fahrzeugart:", DropDownsControl.getInstance().getFahrzeugArt());
 
         TextField shortDescription = new TextField("Short Description:");
@@ -50,13 +53,16 @@ public class AutoAnlegenView extends GridLayout implements View {
         ComboBox<String> fahrzeugTyp = new ComboBox<>("Fahrzeugtyp:",DropDownsControl.getInstance().getFahrzeugTyp());
 
         TextField preis = new TextField("Preis(€):");
+        preis.setRequiredIndicatorVisible(true);
 
         DateField erstzulassung = new DateField("Erstzulassung:");
         erstzulassung.setDateFormat("yyyy-MM-dd");
 
         TextField leistung = new TextField("Leistung(PS):");
+        leistung.setRequiredIndicatorVisible(true);
 
         TextField kilometer = new TextField("Kilometer:");
+        kilometer.setRequiredIndicatorVisible(true);
 
         ComboBox<String> aussenfarbe = new ComboBox<>("Außenfarbe:",DropDownsControl.getInstance().getAussenfarbe());
 
@@ -83,6 +89,69 @@ public class AutoAnlegenView extends GridLayout implements View {
 
         Button weiter = new Button("Weiter");
         Button abbrechen = new Button("Abbrechen");
+
+        Binder<FahrzeugDTO> binder = new Binder<>(FahrzeugDTO.class);
+
+        binder.forField(fahrzeugZustand)
+                .asRequired("FahrzeugZustand ist pflichtfeld!")
+                .bind(FahrzeugDTO::getFahrzeugZustand,FahrzeugDTO::setFahrzeugZustand);
+        binder.forField(fahrzeugart)
+                .asRequired("Fahrzeugart ist pflichtfeld!")
+                .bind(FahrzeugDTO::getFahrzeugart,FahrzeugDTO::setFahrzeugart);
+        binder.forField(shortDescription)
+                .asRequired("Short Description ist pflichtfeld!")
+                .bind(FahrzeugDTO::getShortDescription,FahrzeugDTO::setShortDescription);
+        binder.forField(marke)
+                .asRequired("Marke ist pflichtfeld!")
+                .bind(FahrzeugDTO::getMarke,FahrzeugDTO::setMarke);
+        binder.forField(modell)
+                .asRequired("Modell ist pflichtfeld!")
+                .bind(FahrzeugDTO::getModell,FahrzeugDTO::setModell);
+        binder.forField(fahrzeugTyp)
+                .asRequired("FahrzeugTyp ist pflichtfeld!")
+                .bind(FahrzeugDTO::getFahrzeugTyp,FahrzeugDTO::setFahrzeugTyp);
+        binder.forField(erstzulassung)
+                .asRequired("Erstzulassung ist pflichtfeld!")
+                .bind(FahrzeugDTO::getErstzulassung,FahrzeugDTO::setErstzulassung);
+        binder.forField(aussenfarbe)
+                .asRequired("Außenfarbe ist pflichtfeld!")
+                .bind(FahrzeugDTO::getAussenfarbe,FahrzeugDTO::setAussenfarbe);
+        binder.forField(anzahlSitzplaetze)
+                .asRequired("Anzahl Sitzplätze ist pflichtfeld!")
+                .bind(FahrzeugDTO::getAnzahlSitzplaetze,FahrzeugDTO::setAnzahlSitzplaetze);
+        binder.forField(anzahlTueren)
+                .asRequired("Anzahl Türen ist pflichtfeld!")
+                .bind(FahrzeugDTO::getAnzahlTueren,FahrzeugDTO::setAnzahlTueren);
+        binder.forField(tuevBis)
+                .asRequired("Tüv ist pflichtfeld!")
+                .bind(FahrzeugDTO::getTuev,FahrzeugDTO::setTuev);
+        binder.forField(kraftstoffArt)
+                .asRequired("Kraftstoffart ist pflichtfeld!")
+                .bind(FahrzeugDTO::getKraftstoffart,FahrzeugDTO::setKraftstoffart);
+        binder.forField(getriebe)
+                .asRequired("Getriebe ist pflichtfeld!")
+                .bind(FahrzeugDTO::getGetriebe,FahrzeugDTO::setGetriebe);
+        binder.forField(klimaanlage)
+                .asRequired("Klimaanlage ist pflichtfeld!")
+                .bind(FahrzeugDTO::getKlimaanlage,FahrzeugDTO::setKlimaanlage);
+        binder.forField(anzahlFahrzeughalter)
+                .asRequired("Anzahl Fahrzeughalter ist pflichtfeld!")
+                .bind(FahrzeugDTO::getAnzahlFahrzeughalter,FahrzeugDTO::setAnzahlFahrzeughalter);
+        binder.forField(garantie)
+                .asRequired("Garantie ist pflichtfeld!")
+                .bind(FahrzeugDTO::getGarantie,FahrzeugDTO::setGarantie);
+        binder.forField(umweltplakette)
+                .asRequired("Umweltplakette ist pflichtfeld!")
+                .bind(FahrzeugDTO::getUmweltplakette,FahrzeugDTO::setUmweltplakette);
+        binder.forField(schadenstoffklasse)
+                .asRequired("Schadenstoffklasse ist pflichtfeld!")
+                .bind(FahrzeugDTO::getSchadenstoffklasse,FahrzeugDTO::setSchadenstoffklasse);
+
+        weiter.setEnabled(false);
+
+        //binder.addStatusChangeListener(
+                //event -> weiter.setEnabled(binder.isValid())
+        //);
 
         this.addComponent(topPanelUser,1,1,8,1);
         this.addComponent(formGrid,2,2,7,3);
@@ -203,6 +272,9 @@ public class AutoAnlegenView extends GridLayout implements View {
            }
            UI.getCurrent().getNavigator().navigateTo(Views.FAHRZEUGDESCRIPTION);
         });
+        binder.addStatusChangeListener(
+                event -> weiter.setEnabled(binder.isValid())
+        );
     }
 
     @Override
